@@ -26,5 +26,6 @@ export interface fonts {
   "r-r": string;
   "r-b": string;
   "r-m": string;
-  "ar-t": string;
+  "ar-r": string;
+  "ar-b": string;
 }

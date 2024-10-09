@@ -1,16 +1,16 @@
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import "react-native-reanimated";
+import { createStackNavigator } from "@react-navigation/stack";
+import Introduction from "./Introduction";
+import Service from "./Service";
 
 SplashScreen.preventAutoHideAsync();
-import { createStackNavigator } from "@react-navigation/stack";
-import Intro from "@/screens/stack/Intro";
-
 const Index = () => {
   const Stack = createStackNavigator();
   const [loaded] = useFonts({
-    "ar-t": require("../../assets/fonts/Arame Thin.ttf"),
+    "ar-r": require("../../assets/fonts/Arame.ttf"),
+    "ar-b": require("../../assets/fonts/Arame-Bold.ttf"),
     "r-b": require("../../assets/fonts/Roboto-Bold.ttf"),
     "r-m": require("../../assets/fonts/Roboto-Medium.ttf"),
     "r-r": require("../../assets/fonts/Roboto-Regular.ttf"),
@@ -32,7 +32,8 @@ const Index = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Home" component={Intro} />
+      <Stack.Screen name="Introduction" component={Introduction} />
+      <Stack.Screen name="Service" component={Service} />
     </Stack.Navigator>
   );
 };

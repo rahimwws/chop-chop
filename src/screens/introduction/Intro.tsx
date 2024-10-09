@@ -2,7 +2,6 @@ import React from "react";
 import Typography from "@/shared/ui/Typography";
 import ScreenLayout from "@/shared/ui/Layout";
 import { colors } from "@/shared/lib/theme";
-import LogoSVG from "@/shared/assets/svg/logo-svg.svg";
 import { Image, View } from "react-native";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 const Intro = () => {
@@ -28,7 +27,7 @@ const Intro = () => {
           Pay off without paying attention
         </Typography>
       </View>
-      <LargeButton text="CONNECT WALLET" />
+      <LargeButton text="CONNECT WALLET" isRoute route="ChooseChains" />
     </ScreenLayout>
   );
 };
