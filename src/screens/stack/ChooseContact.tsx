@@ -55,6 +55,8 @@ const ChooseContact = () => {
       </View>
       {mode === "member" ? (
         <LargeButton
+          route="Tabs"
+          isRoute
           text="Add more friends"
           bg={colors.blue}
           textColor="white"

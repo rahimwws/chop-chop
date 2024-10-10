@@ -1,11 +1,11 @@
 import React from "react";
-import Index from "@/navigation";
 import { NavigationContainer } from "@react-navigation/native";
+import Main from "@/app";
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Index />
+      <Main />
     </NavigationContainer>
   );
 };

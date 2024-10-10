@@ -70,7 +70,7 @@ export default function Card({
           marginRight: "auto",
         }}
       >
-        <Typography font="r-m" size={18}>
+        <Typography font="r-m" size={18} align="left">
           {groupName}
         </Typography>
         {isSettled && (

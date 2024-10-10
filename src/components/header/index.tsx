@@ -26,7 +26,7 @@ const Header = ({
             gap: 5,
             alignItems: "center",
 
-            backgroundColor: colors.middleGray,
+            backgroundColor: colors.lightGray,
             justifyContent: "center",
             borderRadius: 5,
             marginTop: "-25%",
