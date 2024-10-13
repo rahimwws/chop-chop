@@ -1,11 +1,14 @@
-import { View, Text } from "react-native";
 import React from "react";
 import ScreenLayout from "@/shared/ui/Layout";
+import Header from "@/components/header";
+import { Balance, ContactList } from "@/widget/contacts";
 
 const Contact = () => {
   return (
     <ScreenLayout>
-      <Text>Contact</Text>
+      <Header title="Contact" />
+      <Balance />
+      <ContactList />
     </ScreenLayout>
   );
 };

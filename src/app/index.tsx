@@ -1,6 +1,5 @@
-import { View, Text } from "react-native";
 import React from "react";
-import Provider from "./Provider";
+import Provider from "./provider/Provider";
 import Index from "@/navigation";
 
 const Main = () => {

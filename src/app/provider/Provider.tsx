@@ -5,6 +5,7 @@ import { mainnet } from "viem/chains";
 import { WagmiProvider } from "wagmi";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { projectId, wagmiConfig } from "@/utils/wagmi";
+import PortalProvider from "./PortalProvider";
 
 // 0. Setup queryClient
 const queryClient = new QueryClient();
@@ -24,12 +25,14 @@ createAppKit({
 export default function Provider({ children }: Props) {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <WagmiProvider config={wagmiConfig}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-          <AppKit />
-        </QueryClientProvider>
-      </WagmiProvider>
+      <PortalProvider>
+        <WagmiProvider config={wagmiConfig}>
+          <QueryClientProvider client={queryClient}>
+            {children}
+            <AppKit />
+          </QueryClientProvider>
+        </WagmiProvider>
+      </PortalProvider>
     </GestureHandlerRootView>
   );
 }

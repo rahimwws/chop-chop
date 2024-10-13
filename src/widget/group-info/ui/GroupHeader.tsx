@@ -4,8 +4,14 @@ import { colors } from "@/shared/lib/theme";
 import { Group } from "@/entities/groups/lib/types";
 import Typography from "@/shared/ui/Typography";
 import LargeButton from "@/shared/ui/Button/LargeButton";
+import { useAccount } from "wagmi";
+import { billToDebts, calcOweIsOwed } from "@/entities/groups/lib/store";
 
 const GroupHeader = ({ group }: { group: Group }) => {
+  const account = useAccount();
+
+  const allDebts = group!.bills.flatMap((x) => billToDebts(x));
+  const oweOwed = calcOweIsOwed(allDebts, account.address as any);
   return (
     <View
       style={{
@@ -27,10 +33,10 @@ const GroupHeader = ({ group }: { group: Group }) => {
           marginVertical: 3,
         }}
       >
-        You are owed: 153,6 $
+        You are owed: {oweOwed.userOwe}$
       </Typography>
       <Typography size={18} font="r-r">
-        You owe: 13,5 $
+        You owe: {oweOwed.userIsOwed}$
       </Typography>
       <View
         style={{
@@ -51,6 +57,8 @@ const GroupHeader = ({ group }: { group: Group }) => {
           }}
           textColor="white"
           bg={colors.blue}
+          isRoute
+          route="SettleUp"
         />
         <LargeButton
           styles={{

@@ -44,7 +44,7 @@ const CreateField = () => {
             fontFamily: "r-r",
             fontSize: 18,
           }}
-          placeholderTextColor="rgba(47, 40, 208, 0.5)"
+          placeholderTextColor={colors.lightBlue}
         />
       </View>
       <LargeButton

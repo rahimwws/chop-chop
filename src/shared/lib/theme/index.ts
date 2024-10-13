@@ -12,7 +12,7 @@ export interface ColorsT {
 
 export const colors: ColorsT = {
   blue: "#2F28D0",
-  lightBlue: "#D3D1F6",
+  lightBlue: "rgba(47, 40, 208, 0.5)",
   black: "#000000",
   white: "#FFFFFF",
   lightGray: "#EDEDED",

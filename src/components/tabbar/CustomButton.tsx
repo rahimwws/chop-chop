@@ -1,4 +1,5 @@
 import { LightHeptic } from "@/shared/lib/heptics";
+import { useAppNavigation } from "@/shared/lib/navigation";
 import { colors } from "@/shared/lib/theme";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -8,6 +9,8 @@ export const CustomTabButton = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const navigation = useAppNavigation();
+
   return (
     <TouchableOpacity
       style={{
@@ -15,7 +18,10 @@ export const CustomTabButton = ({
         justifyContent: "center",
         alignContent: "center",
       }}
-      onPress={LightHeptic}
+      onPress={() => {
+        LightHeptic();
+        navigation.navigate("CreateGroup");
+      }}
       activeOpacity={0.8}
     >
       <View

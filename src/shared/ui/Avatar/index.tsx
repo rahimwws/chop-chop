@@ -9,15 +9,13 @@ import {
 import { colors } from "@/shared/lib/theme";
 
 interface AvatarProps {
-  imageUri: string | null;
+  imageUri: any;
   onEdit: () => void;
 }
 
 const Avatar: React.FC<AvatarProps> = ({ imageUri, onEdit }) => (
   <View style={styles.avatarContainer}>
-    {imageUri && (
-      <RNImage source={{ uri: imageUri }} style={styles.avatarImage} />
-    )}
+    {imageUri && <RNImage source={imageUri} style={styles.avatarImage} />}
     <TouchableOpacity onPress={onEdit} style={styles.avatarEditButton}>
       {!imageUri && (
         <RNImage

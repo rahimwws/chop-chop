@@ -20,7 +20,7 @@ const Tabs = () => {
         tabBarStyle: {
           backgroundColor: colors.blue,
           paddingTop: 5,
-          borderRadius: 5,
+          borderTopWidth: 0,
         },
         tabBarLabelStyle: {
           color: colors.white,

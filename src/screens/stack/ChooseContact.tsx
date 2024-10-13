@@ -5,7 +5,7 @@ import Header from "@/components/header";
 import { ContactField } from "@/features/create-group";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { colors } from "@/shared/lib/theme";
-import { ContactList } from "@/entities/contacts";
+import { ContactList } from "@/entities/group-contacts";
 import { Group } from "@/entities/groups/lib/types";
 import { RouteProp, useRoute } from "@react-navigation/native";
 type RouteParams = {
@@ -24,7 +24,7 @@ const ChooseContact = () => {
   ]);
 
   // TODO: Add logic for relations between contact and participants
-
+  if (!params.group) return null;
   return (
     <ScreenLayout>
       <Header title="Add members " />

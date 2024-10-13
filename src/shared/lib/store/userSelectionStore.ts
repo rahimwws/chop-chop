@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { storage } from "../storage";
-
+// TODO create object with differnt tokens
 interface Debt {
   from: string;
   to: string;
