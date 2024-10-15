@@ -33,7 +33,14 @@ const Tabs = () => {
         component={Groups}
         options={{
           tabBarIcon: () => {
-            return <GroupSVG width={26} height={26} />;
+            return (
+              <GroupSVG
+                width={26}
+                height={26}
+                stroke={colors.white}
+                strokeWidth={2}
+              />
+            );
           },
         }}
       />

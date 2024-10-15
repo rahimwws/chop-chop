@@ -77,7 +77,7 @@ const Header = ({
         />
       )}
       <Typography
-        styles={{ marginTop: "-20%" }}
+        styles={{ marginTop: "-20%", lineHeight: 32 }}
         align="left"
         font="ar-r"
         size={32}

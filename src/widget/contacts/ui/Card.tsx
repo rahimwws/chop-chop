@@ -3,8 +3,10 @@ import React from "react";
 import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
 import LargeButton from "@/shared/ui/Button/LargeButton";
+import { useAppNavigation } from "@/shared/lib/navigation";
 
 const Card = () => {
+  const navigation = useAppNavigation();
   return (
     <View
       style={{
@@ -51,8 +53,7 @@ const Card = () => {
         }}
         textColor="white"
         bg={colors.blue}
-        isRoute
-        route="SettleUp"
+        action={() => navigation.navigate("Expense", { type: "personal" })}
       />
     </View>
   );

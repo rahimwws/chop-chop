@@ -2,10 +2,11 @@ import { View, Text } from "react-native";
 import React from "react";
 import { billToDebts, calcOweIsOwed, useGroupsStore } from "../lib/store";
 import Card from "./Card";
+import { useAccount } from "wagmi";
 
 const List = () => {
   const groupsStore = useGroupsStore();
-  const userAddress = "0xuser";
+  const { address } = useAccount();
   return (
     <View
       style={{
@@ -15,7 +16,7 @@ const List = () => {
     >
       {groupsStore.groups.map((item, index) => {
         const debts = item.bills.flatMap((x) => billToDebts(x));
-        const oweOwed = calcOweIsOwed(debts, userAddress);
+        const oweOwed = calcOweIsOwed(debts, address!);
         return (
           <Card
             key={index}

@@ -25,7 +25,7 @@ export function calcOweIsOwed(debts: Debt[], userAddress: string) {
 
   return { userOwe, userIsOwed };
 }
-
+//  пустые данные
 export const useGroupsStore = create<
   UserSelectionsStore,
   [["zustand/persist", never]]

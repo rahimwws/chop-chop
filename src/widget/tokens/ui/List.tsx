@@ -17,29 +17,39 @@ const List = () => {
         tokens
           .filter((chain) => chain.id == chainId)
           .map((item, index) =>
-            item.tokens.map((token, tokenIndex) => (
-              <TokenCard
-                chain={item.id}
-                key={tokenIndex}
-                text={token.text}
-                isSelected={selectionsStore.selectedTokens.includes(
-                  token.id + item.id
-                )}
-                tokenId={token.id}
-                setIsSelected={() =>
-                  selectionsStore.selectedTokens.includes(token.id + item.id)
-                    ? selectionsStore.setSelectedTokens(
-                        selectionsStore.selectedTokens.filter(
-                          (tokenId) => tokenId != token.id + item.id
+            item.tokens.map((token, tokenIndex) => {
+              const selectedToken = { chain: item.id, token: token.id };
+
+              const isSelected = selectionsStore.selectedTokens.some(
+                (selected) =>
+                  selected.chain === selectedToken.chain &&
+                  selected.token === selectedToken.token
+              );
+
+              return (
+                <TokenCard
+                  chain={item.id}
+                  key={tokenIndex}
+                  text={token.text}
+                  isSelected={isSelected}
+                  tokenId={token.id}
+                  setIsSelected={() =>
+                    isSelected
+                      ? selectionsStore.setSelectedTokens(
+                          selectionsStore.selectedTokens.filter(
+                            (selected) =>
+                              selected.chain !== selectedToken.chain ||
+                              selected.token !== selectedToken.token
+                          )
                         )
-                      )
-                    : selectionsStore.setSelectedTokens([
-                        ...selectionsStore.selectedTokens,
-                        token.id + item.id,
-                      ])
-                }
-              />
-            ))
+                      : selectionsStore.setSelectedTokens([
+                          ...selectionsStore.selectedTokens,
+                          selectedToken,
+                        ])
+                  }
+                />
+              );
+            })
           )
       )}
     </View>

@@ -30,7 +30,7 @@ const ProfileView = ({
           width: "72%",
         }}
       >
-        <Avatar imageUri={image} onEdit={openSheet} />
+        <Avatar imageUri={image} onEdit={openSheet} avatar />
         <View
           style={{
             gap: 5,

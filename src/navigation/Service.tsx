@@ -5,6 +5,7 @@ import CreateGroup from "@/screens/stack/CreateGroup";
 import ChooseContact from "@/screens/stack/ChooseContact";
 import GroupDetail from "@/screens/stack/GroupDetail";
 import SettleUp from "@/screens/stack/SettleUp";
+import AddExpense from "@/screens/stack/AddExpense";
 
 const Service = () => {
   const Stack = createStackNavigator();
@@ -20,6 +21,7 @@ const Service = () => {
       <Stack.Screen name="ChooseContact" component={ChooseContact} />
       <Stack.Screen name="GroupDetail" component={GroupDetail} />
       <Stack.Screen name="SettleUp" component={SettleUp} />
+      <Stack.Screen name="Expense" component={AddExpense} />
     </Stack.Navigator>
   );
 };
