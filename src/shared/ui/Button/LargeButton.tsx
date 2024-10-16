@@ -6,7 +6,7 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
-import React from "react";
+import React, { ReactNode } from "react";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { ColorsT, colors } from "@/shared/lib/theme";
 import Typography from "../Typography";
@@ -23,6 +23,8 @@ const LargeButton = ({
   styles,
   textStyle,
   theme = "default",
+  icon,
+  iconPlace = false,
 }: {
   text: string;
   isRoute?: boolean;
@@ -35,6 +37,8 @@ const LargeButton = ({
   styles?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   theme?: "default" | "outline";
+  icon?: ReactNode;
+  iconPlace?: "right" | false;
 }) => {
   const navigation = useAppNavigation();
   const HandleClick = () => {
@@ -55,6 +59,8 @@ const LargeButton = ({
           opacity: disabled ? 0.5 : 1,
           borderWidth: theme === "outline" ? 1 : 0,
           borderColor: textColor,
+          flexDirection: iconPlace ? "row-reverse" : "row",
+          gap: 7,
         },
         styles && styles,
       ]}
@@ -62,6 +68,7 @@ const LargeButton = ({
       activeOpacity={0.7}
       onPress={HandleClick}
     >
+      {icon && icon}
       <Typography
         color={textColor ?? "blue"}
         size={24}

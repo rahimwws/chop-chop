@@ -4,8 +4,10 @@ import ScreenLayout from "@/shared/ui/Layout";
 import { colors } from "@/shared/lib/theme";
 import { Image, View } from "react-native";
 import LargeButton from "@/shared/ui/Button/LargeButton";
-import { AppKitButton } from "@reown/appkit-wagmi-react-native";
+import { ModalController } from "@reown/appkit-core-react-native";
+import { useAppNavigation } from "@/shared/lib/navigation";
 const Intro = () => {
+  const navigation = useAppNavigation();
   return (
     <ScreenLayout styles={{ backgroundColor: colors.blue }}>
       <View
@@ -28,15 +30,13 @@ const Intro = () => {
           Pay off without paying attention
         </Typography>
       </View>
-      <AppKitButton
-        connectStyle={
-          {
-            // backgroundColor: colors.white,
-          }
-        }
-        label=""
+      <LargeButton
+        text="CONNECT WALLET"
+        action={() => {
+          navigation.navigate("ChooseChains");
+          // ModalController.open();
+        }}
       />
-      <LargeButton text="CONNECT WALLET" isRoute route="ChooseChains" />
     </ScreenLayout>
   );
 };

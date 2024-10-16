@@ -4,8 +4,8 @@ import Header from "@/components/header";
 import { ExpenseDescription, ExpenseName } from "@/features/add-expense";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { colors } from "@/shared/lib/theme";
-import { useAppNavigation } from "@/shared/lib/navigation";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import { useGroupDetailStore } from "@/shared/lib/store/groupDetail";
 type RouteParams = {
   type: {
     type: "personal" | "group";
@@ -14,8 +14,9 @@ type RouteParams = {
 
 type routeT = RouteProp<RouteParams, "type">;
 const AddExpense = () => {
-  const navigation = useAppNavigation();
+  const group = useGroupDetailStore((store) => store.groupDetails);
   const { params } = useRoute<routeT>();
+  if (!group) return null;
   return (
     <ScreenLayout>
       <Header
@@ -25,8 +26,8 @@ const AddExpense = () => {
             : "Add Group Expense"
         }
       />
-      <ExpenseName type={params.type} />
-      <ExpenseDescription />
+      <ExpenseName type={params.type} name={group.name} />
+      <ExpenseDescription group={group} type={params.type} />
       <LargeButton
         text="Add Payment"
         bg={colors.blue}
@@ -35,7 +36,8 @@ const AddExpense = () => {
           height: 40,
           marginVertical: "5%",
         }}
-        action={() => navigation.goBack()}
+        isRoute
+        route="Payments"
       />
     </ScreenLayout>
   );

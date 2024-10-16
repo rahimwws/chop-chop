@@ -14,7 +14,6 @@ const CreateField = () => {
   const navigation = useAppNavigation();
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [name, setName] = useState<string>();
-  const participants = [""];
 
   const handleChangeAvatar = useCallback(async () => {
     const result = await pickImageAsync();
@@ -53,22 +52,23 @@ const CreateField = () => {
         textColor={"white"}
         styles={{ height: 40 }}
         action={() => {
+          const id = uuid.v4();
           groupsStore.setGroups([
             ...groupsStore.groups,
             {
-              id: uuid.v4(),
+              id,
               name,
               image: imageUri,
-              participants: participants,
+              participants: [],
               bills: [],
             } as Group,
           ]);
 
           navigation.navigate("ChooseContact", {
             group: {
-              id: uuid.v4(),
+              id,
               name,
-              participants: participants,
+              participants: [],
               bills: [],
               image: imageUri,
             },

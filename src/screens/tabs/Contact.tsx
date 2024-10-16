@@ -1,31 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import Header from "@/components/header";
 import { Balance, ContactList } from "@/widget/contacts";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { colors } from "@/shared/lib/theme";
+import { AddContact } from "@/features/add-contact";
+import { Image, ScrollView } from "react-native";
 
 const Contact = () => {
+  const [add, setAdd] = useState<boolean>(false);
   return (
-    <ScreenLayout>
-      <Header title="Contact" />
-      <Balance />
-      <ContactList />
-      <LargeButton
-        text="Add more friends"
-        bg={colors.blue}
-        textColor="white"
-        styles={{
-          marginTop: "5%",
-          marginBottom: 10,
+    <ScreenLayout pb={0}>
+      <ScrollView
+        style={{
+          flex: 1,
         }}
-      />
-      <LargeButton
-        text="Invite"
-        bg={colors.lightGray}
-        textColor="blue"
-        styles={{}}
-      />
+        showsVerticalScrollIndicator={false}
+      >
+        <Header title="Contact" />
+        <Balance />
+        <ContactList />
+        <LargeButton
+          text="Add more friends"
+          bg={colors.blue}
+          textColor="white"
+          styles={{
+            marginTop: "5%",
+            marginBottom: 10,
+            height: 40,
+          }}
+          action={() => setAdd(!add)}
+          icon={
+            <Image
+              source={require("@/shared/assets/images/interface/plus-white.png")}
+              style={{
+                width: 17,
+                height: 17,
+              }}
+            />
+          }
+        />
+        <LargeButton
+          text="Invite"
+          bg={colors.lightGray}
+          textColor="blue"
+          styles={{
+            height: 40,
+          }}
+        />
+        {add && <AddContact />}
+      </ScrollView>
     </ScreenLayout>
   );
 };

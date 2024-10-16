@@ -4,7 +4,14 @@ import { colors } from "@/shared/lib/theme";
 import Description from "@/shared/assets/svg/icons/description.svg";
 import Money from "@/shared/assets/svg/icons/money.svg";
 import ExpenseCard from "./ExpenseCard";
-const ExpenseDescription = () => {
+import { Group } from "@/entities/groups/lib/types";
+const ExpenseDescription = ({
+  group,
+  type,
+}: {
+  group: Group;
+  type: "personal" | "group";
+}) => {
   const [description, setDescription] = useState<string>();
   return (
     <View
@@ -90,7 +97,10 @@ const ExpenseDescription = () => {
           gap: 10,
         }}
       >
-        <ExpenseCard />
+        {type === "group" &&
+          group.participants.map((item, index) => {
+            return <ExpenseCard address={item} key={index} />;
+          })}
       </View>
     </View>
   );

@@ -1,12 +1,14 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import { Contact } from "@/entities/contacts/model/types";
 
-const Card = () => {
+const Card = ({ contact }: { contact: Contact }) => {
   const navigation = useAppNavigation();
+
   return (
     <View
       style={{
@@ -23,12 +25,13 @@ const Card = () => {
           alignItems: "center",
         }}
       >
-        <View
+        <Image
+          source={contact.avatarUrl}
           style={{
             width: 60,
             height: 60,
-            backgroundColor: colors.middleGray,
             borderRadius: 50,
+            resizeMode: "contain",
           }}
         />
         <View
@@ -37,7 +40,7 @@ const Card = () => {
           }}
         >
           <Typography size={18} font="r-b">
-            Alexander Nolan
+            {contact.name}
           </Typography>
           <Typography color="red">You owe: 25 $</Typography>
         </View>

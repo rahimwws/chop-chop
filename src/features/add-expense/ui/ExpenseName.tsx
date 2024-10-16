@@ -4,7 +4,15 @@ import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
 import GroupSVG from "@/shared/assets/svg/tabs/group-svg.svg";
 import CalendarSvg from "@/shared/assets/svg/icons/calendar.svg";
-const ExpenseName = ({ type }: { type: "personal" | "group" }) => {
+import { getFormattedDate } from "../model/format";
+const ExpenseName = ({
+  type,
+  name,
+}: {
+  type: "personal" | "group";
+  name: string;
+}) => {
+  const date = getFormattedDate();
   return (
     <View
       style={{
@@ -24,7 +32,7 @@ const ExpenseName = ({ type }: { type: "personal" | "group" }) => {
       >
         <GroupSVG width={26} height={26} stroke={colors.blue} strokeWidth={2} />
         <Typography size={18} font="r-m" align="left">
-          {type === "personal" ? " With Alexandr" : "Group Number 1"}
+          {type === "personal" ? " With Alexandr" : name}
         </Typography>
       </View>
       <View
@@ -42,7 +50,7 @@ const ExpenseName = ({ type }: { type: "personal" | "group" }) => {
           strokeWidth={0.05}
         />
         <Typography size={18} font="r-m" align="left">
-          Today 19th September
+          {date}
         </Typography>
       </View>
     </View>

@@ -5,12 +5,12 @@ import { Text, View, Image, TouchableOpacity } from "react-native";
 import Mark from "@/shared/assets/svg/icons/check-mark.svg";
 
 export default function Card({
-  //   image,
+  image,
   text,
   isSelected,
   setIsSelected,
 }: {
-  //   image: any;
+  image: any;
   text: string;
   isSelected: boolean;
   setIsSelected: () => void;
@@ -26,6 +26,7 @@ export default function Card({
         justifyContent: "space-between",
         paddingHorizontal: 10,
         borderRadius: 5,
+        height: 60,
       }}
       onPress={setIsSelected}
     >
@@ -37,10 +38,15 @@ export default function Card({
           gap: 19,
         }}
       >
-        {/* <Image
+        <Image
           source={image}
-          style={{ width: 34, height: 34, objectFit: "contain" }}
-        /> */}
+          style={{
+            width: 50,
+            height: 50,
+            objectFit: "contain",
+            borderRadius: 50,
+          }}
+        />
         <Typography size={18} font="r-m">
           {text}
         </Typography>

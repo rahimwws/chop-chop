@@ -1,11 +1,8 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Tabs from "./Tabs";
-import CreateGroup from "@/screens/stack/CreateGroup";
-import ChooseContact from "@/screens/stack/ChooseContact";
-import GroupDetail from "@/screens/stack/GroupDetail";
-import SettleUp from "@/screens/stack/SettleUp";
 import AddExpense from "@/screens/stack/AddExpense";
+import Payments from "@/screens/stack/Payments";
 
 const Service = () => {
   const Stack = createStackNavigator();
@@ -17,11 +14,7 @@ const Service = () => {
       }}
     >
       <Stack.Screen name="Tabs" component={Tabs} />
-      <Stack.Screen name="CreateGroup" component={CreateGroup} />
-      <Stack.Screen name="ChooseContact" component={ChooseContact} />
-      <Stack.Screen name="GroupDetail" component={GroupDetail} />
-      <Stack.Screen name="SettleUp" component={SettleUp} />
-      <Stack.Screen name="Expense" component={AddExpense} />
+      <Stack.Screen name="Payments" component={Payments} />
     </Stack.Navigator>
   );
 };

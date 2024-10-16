@@ -57,6 +57,16 @@ const ChooseToken = () => {
           styles={{ width: "48%" }}
           isRoute
           route="ChooseChains"
+          icon={
+            <Image
+              source={require("@/shared/assets/images/interface/arrow-left.png")}
+              style={{
+                width: 20,
+                height: 20,
+                resizeMode: "contain",
+              }}
+            />
+          }
         />
         <LargeButton
           text="Next"
@@ -65,6 +75,17 @@ const ChooseToken = () => {
           styles={{ width: "48%" }}
           isRoute
           route="Service"
+          iconPlace="right"
+          icon={
+            <Image
+              source={require("@/shared/assets/images/interface/arrow-right.png")}
+              style={{
+                width: 20,
+                height: 20,
+                resizeMode: "contain",
+              }}
+            />
+          }
         />
       </View>
     </ScreenLayout>

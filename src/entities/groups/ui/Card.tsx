@@ -43,7 +43,11 @@ export default function Card({
         borderRadius: 5,
         gap: 10,
       }}
-      onPress={() => navigation.navigate("GroupDetail", { id })}
+      onPress={() =>
+        navigation.navigate("GroupDetail", {
+          group: groupsStore.groups.find((group) => group.id === id),
+        })
+      }
     >
       <View
         style={{

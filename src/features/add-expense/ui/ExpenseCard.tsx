@@ -1,11 +1,15 @@
-import { View, TextInput } from "react-native";
+import { View, TextInput, Image } from "react-native";
 import React, { useState } from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import CheckBox from "@/shared/ui/CheckBox";
+import { useContactsStore } from "@/entities/contacts/lib/store";
 
-const ExpenseCard = () => {
+const ExpenseCard = ({ address }: { address: string }) => {
   const [price, setPrice] = useState<string>();
+  const user = useContactsStore((store) =>
+    store.contacts.find((item) => item.tokenAddress === address)
+  );
   return (
     <View
       style={{
@@ -19,17 +23,19 @@ const ExpenseCard = () => {
           flexDirection: "row",
           alignItems: "center",
           gap: 10,
+          width: "70%",
         }}
       >
-        <View
+        <Image
           style={{
             width: 40,
             height: 40,
             borderRadius: 50,
-            backgroundColor: colors.white,
+            resizeMode: "contain",
           }}
+          source={user?.avatarUrl}
         />
-        <Typography>Mizori Shirouki</Typography>
+        <Typography>{user?.name}</Typography>
       </View>
       <TextInput
         defaultValue={price}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import Header from "@/components/header";
@@ -8,27 +8,31 @@ import {
   ParticipantsList,
   PaymentList,
 } from "@/widget/group-info";
-import { useGroupsStore } from "@/entities/groups/lib/store";
 import TopTab from "@/components/tabbar/TopTab";
 import { ScrollView, View } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet";
+import { Group } from "@/entities/groups/lib/types";
+import { useGroupDetailStore } from "@/shared/lib/store/groupDetail";
 type RouteParams = {
   detail: {
-    id: string;
+    group: Group;
   };
 };
 
 type routeT = RouteProp<RouteParams, "detail">;
 const GroupDetail = () => {
+  const setDetail = useGroupDetailStore((store) => store.setGroupDetails);
+
   const { params } = useRoute<routeT>();
-  const store = useGroupsStore();
-  const group = store.groups.find((g) => g.id == params.id);
   const [mode, setMode] = useState<"payments" | "participants">("payments");
   const bottomSheetRef = useRef<BottomSheet>(null);
   const openSheet = () => {
     bottomSheetRef.current?.expand();
   };
-  if (!group) return null;
+  useEffect(() => {
+    if (params.group) setDetail(params.group);
+  }, []);
+  if (!params.group) return null;
   return (
     <ScreenLayout>
       <ScrollView
@@ -38,7 +42,7 @@ const GroupDetail = () => {
         showsVerticalScrollIndicator={false}
       >
         <Header title="" type="stack" />
-        <GroupHeader group={group} />
+        <GroupHeader group={params.group} />
         <TopTab
           mode={mode}
           setMode={setMode}
@@ -46,9 +50,9 @@ const GroupDetail = () => {
           secondTitle="participants"
         />
         {mode === "payments" ? (
-          <PaymentList group={group} />
+          <PaymentList group={params.group} />
         ) : (
-          <ParticipantsList group={group} action={openSheet} />
+          <ParticipantsList group={params.group} action={openSheet} />
         )}
       </ScrollView>
       <ActionSheet bottomSheetRef={bottomSheetRef} />
