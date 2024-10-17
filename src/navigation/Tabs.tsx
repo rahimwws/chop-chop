@@ -37,7 +37,7 @@ const Tabs = () => {
         name="GroupStack"
         component={GroupStack}
         options={{
-          title: "Group",
+          title: "Groups",
           tabBarIcon: () => {
             return (
               <GroupSVG
@@ -55,7 +55,7 @@ const Tabs = () => {
                 activeOpacity={0.8}
                 onPress={() => {
                   setRoute("group");
-                  navigation.navigate("GroupStack");
+                  navigation.navigate("Groups");
                 }}
               />
             );
@@ -63,7 +63,7 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Contact"
+        name="Contacts"
         component={Contact}
         options={{
           tabBarIcon: () => {
@@ -76,7 +76,7 @@ const Tabs = () => {
                 activeOpacity={0.8}
                 onPress={() => {
                   setRoute("contact");
-                  navigation.navigate("Contact");
+                  navigation.navigate("Contacts");
                 }}
               />
             );

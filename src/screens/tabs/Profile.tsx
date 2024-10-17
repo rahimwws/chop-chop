@@ -7,6 +7,7 @@ import { useAccount } from "wagmi";
 import { ScrollView, Switch, View } from "react-native";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
+import LargeButton from "@/shared/ui/Button/LargeButton";
 
 const Profile = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -33,6 +34,18 @@ const Profile = () => {
           setImage={setProfileImage}
         />
         <ProfileTokens />
+        <LargeButton
+          text="Manage Network Tokens"
+          bg={colors.blue}
+          textColor="white"
+          styles={{
+            marginTop: "5%",
+            marginBottom: 10,
+            height: 40,
+          }}
+          isRoute
+          route="ChooseChains"
+        />
         <Typography
           size={20}
           font="r-m"

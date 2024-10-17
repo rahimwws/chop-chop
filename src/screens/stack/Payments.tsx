@@ -36,14 +36,7 @@ const Payments = () => {
         keyExtractor={(_, index) => index.toString()}
       />
 
-      <Typography
-        styles={{
-          marginTop: "-25%",
-        }}
-        align="left"
-        font="r-m"
-        size={22}
-      >
+      <Typography styles={{}} align="left" font="r-m" size={22}>
         All
       </Typography>
       <FlatList

@@ -6,8 +6,21 @@ import LargeButton from "@/shared/ui/Button/LargeButton";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { Contact } from "@/entities/contacts/model/types";
 
-const Card = ({ contact }: { contact: Contact }) => {
+interface CardProps {
+  contact: Contact;
+  userOwe: number;
+  userIsOwed: number;
+}
+
+const Card = ({ contact, userOwe, userIsOwed }: CardProps) => {
   const navigation = useAppNavigation();
+
+  const debtMessage =
+    userOwe > 0
+      ? `You owe: ${userOwe} $`
+      : userIsOwed > 0
+      ? `You are owed: ${userIsOwed} $`
+      : "No debts";
 
   return (
     <View
@@ -42,7 +55,9 @@ const Card = ({ contact }: { contact: Contact }) => {
           <Typography size={18} font="r-b">
             {contact.name}
           </Typography>
-          <Typography color="red">You owe: 25 $</Typography>
+          <Typography color={userOwe > 0 ? "red" : "green"}>
+            {debtMessage}
+          </Typography>
         </View>
       </View>
       <LargeButton

@@ -5,6 +5,7 @@ import { useEnsName } from "wagmi";
 import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import { Bill } from "@/entities/groups/lib/types";
 
 const shortenAddress = (address: string) => {
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
@@ -16,12 +17,14 @@ export default function PaymentCard({
   paidBy,
   billAmount,
   userOwe,
+  bill,
 }: {
   date: { number: number; month: string };
   place: string;
   paidBy: string;
   billAmount: number;
   userOwe: number;
+  bill: Bill;
 }) {
   const { data: ensName } = useEnsName({
     address: paidBy as any,
@@ -31,7 +34,7 @@ export default function PaymentCard({
   return (
     <TouchableOpacity
       style={{ flexDirection: "row", gap: 5 }}
-      onPress={() => navigation.navigate("PurchaseDetail")}
+      onPress={() => navigation.navigate("PurchaseDetail", { bill })}
     >
       <View
         style={{

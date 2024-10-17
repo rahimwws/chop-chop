@@ -17,7 +17,7 @@ const Contact = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Header title="Contact" />
+        <Header title="Contacts" />
         <Balance />
         <ContactList />
         <LargeButton

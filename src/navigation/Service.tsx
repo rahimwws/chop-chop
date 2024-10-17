@@ -14,7 +14,6 @@ const Service = () => {
       }}
     >
       <Stack.Screen name="Tabs" component={Tabs} />
-      <Stack.Screen name="Payments" component={Payments} />
     </Stack.Navigator>
   );
 };

@@ -2,8 +2,9 @@ import { View, Text } from "react-native";
 import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
+import { Bill } from "@/entities/groups/lib/types";
 
-const PurchasePeople = () => {
+const PurchasePeople = ({ bill }: { bill: Bill }) => {
   return (
     <View
       style={{
@@ -12,35 +13,41 @@ const PurchasePeople = () => {
         backgroundColor: colors.lightGray,
         padding: 10,
         borderRadius: 5,
+        gap: 10,
       }}
     >
-      <View
-        style={{
-          flexDirection: "row",
-          gap: 10,
-        }}
-      >
-        <View
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 30,
-            backgroundColor: colors.white,
-          }}
-        />
-        <View
-          style={{
-            alignItems: "flex-start",
-          }}
-        >
-          <Typography font="r-m" size={18}>
-            Alexander Savinchuk
-          </Typography>
-          <Typography font="r-m">
-            <Typography color="blue">Paid:</Typography> 143$
-          </Typography>
-        </View>
-      </View>
+      {bill.spenersAddresses.map((people, index) => {
+        const price = bill.spentAmounts[index];
+        return (
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 10,
+            }}
+          >
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                backgroundColor: colors.white,
+              }}
+            />
+            <View
+              style={{
+                alignItems: "flex-start",
+              }}
+            >
+              <Typography font="r-m" size={18}>
+                {people}
+              </Typography>
+              <Typography font="r-m">
+                <Typography color="blue">Paid:</Typography> {price}$
+              </Typography>
+            </View>
+          </View>
+        );
+      })}
     </View>
   );
 };

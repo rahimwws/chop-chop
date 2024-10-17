@@ -25,6 +25,24 @@ export function calcOweIsOwed(debts: Debt[], userAddress: string) {
 
   return { userOwe, userIsOwed };
 }
+export function calcOweIsOwedContact(
+  debts: Debt[],
+  userAddress: string,
+  contactAddress: string
+) {
+  const userOwe = debts
+    .filter((x) => x.to == userAddress && x.from == contactAddress)
+    .map((x) => x.debt)
+    .reduce((x, y) => x + y, 0);
+
+  const userIsOwed = debts
+    .filter((x) => x.from == userAddress && x.to == contactAddress)
+    .map((x) => x.debt)
+    .reduce((x, y) => x + y, 0);
+
+  return { userOwe, userIsOwed };
+}
+
 export const useGroupsStore = create<
   UserSelectionsStore,
   [["zustand/persist", never]]

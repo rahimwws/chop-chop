@@ -5,8 +5,20 @@ import Header from "@/components/header";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import PurchasePeople from "@/components/purchase-people";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { useGroupsStore } from "@/entities/groups/lib/store";
+import { Bill } from "@/entities/groups/lib/types";
+type RouteParams = {
+  bill: {
+    bill: Bill;
+  };
+};
 
+type routeT = RouteProp<RouteParams, "bill">;
 const PurchaseDetail = () => {
+  const { params } = useRoute<routeT>();
+  console.log(params.bill);
+
   return (
     <ScreenLayout>
       <Header title="" type="stack" />
@@ -31,14 +43,16 @@ const PurchaseDetail = () => {
           }}
         />
         <Typography size={20} color="blue" font="r-m">
-          Millenium Hotel Bar
+          {params.bill.name}
         </Typography>
         <Typography size={22} styles={{ marginVertical: "1%" }} font="r-m">
-          134,00 $
+          {params.bill.sum}$
         </Typography>
-        <Typography>Added by Alexander.S on 19th October 2024</Typography>
+        <Typography>
+          Added by {params.bill.payerAddress} on 19th October 2024
+        </Typography>
       </View>
-      <PurchasePeople />
+      <PurchasePeople bill={params.bill} />
     </ScreenLayout>
   );
 };

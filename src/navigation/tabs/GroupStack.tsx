@@ -8,6 +8,7 @@ import GroupDetail from "@/screens/stack/GroupDetail";
 import SettleUp from "@/screens/stack/SettleUp";
 import PurchaseDetail from "@/screens/stack/PurchaseDetail";
 import AddExpense from "@/screens/stack/AddExpense";
+import Payments from "@/screens/stack/Payments";
 
 const GroupStack = () => {
   const Stack = createStackNavigator();
@@ -25,6 +26,7 @@ const GroupStack = () => {
       <Stack.Screen name="SettleUp" component={SettleUp} />
       <Stack.Screen name="PurchaseDetail" component={PurchaseDetail} />
       <Stack.Screen name="Expense" component={AddExpense} />
+      <Stack.Screen name="Payments" component={Payments} />
     </Stack.Navigator>
   );
 };

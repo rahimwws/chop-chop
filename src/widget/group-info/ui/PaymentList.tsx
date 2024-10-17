@@ -26,6 +26,7 @@ const PaymentList = ({ group }: { group: Group }) => {
             paidBy={b.payerAddress}
             billAmount={b.sum}
             userOwe={oweOwed.userIsOwed}
+            bill={b}
           />
         );
       })}

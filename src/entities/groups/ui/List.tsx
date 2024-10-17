@@ -7,7 +7,6 @@ import { useAccount } from "wagmi";
 const List = () => {
   const groupsStore = useGroupsStore();
   const { address } = useAccount();
-  console.log(groupsStore.groups);
   useEffect(() => {
     if (groupsStore.groups.length === 0)
       groupsStore.setGroups([
