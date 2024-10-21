@@ -22,7 +22,7 @@ const ContactList = () => {
     const { userOwe, userIsOwed } = calcOweIsOwedContact(
       allDebts,
       userAddress,
-      contact.tokenAddress
+      contact.address
     );
     return { ...contact, userOwe, userIsOwed };
   });

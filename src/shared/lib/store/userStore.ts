@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { storage } from "../storage";
 
-interface UserStore {
+interface useUserStore {
   address: string;
   username: string;
   avatar: string;
@@ -11,7 +11,7 @@ interface UserStore {
   setAvatar: (avatar: string) => void;
 }
 
-export const userStore = create<UserStore>()(
+export const useUserStore = create<useUserStore>()(
   persist(
     (set) => ({
       address: "",

@@ -19,17 +19,17 @@ export const useContactsStore = create<
       contacts: [
         {
           name: "Alexander Nolan",
-          tokenAddress: "0x12345abcde",
+          address: "0x12345abcde",
           avatarUrl: require("@/shared/assets/images/avatars/avatar-1.png"),
         },
         {
           name: "Mizori Shirouki",
-          tokenAddress: "0x67890fghij",
+          address: "0x67890fghij",
           avatarUrl: require("@/shared/assets/images/avatars/avatar-2.png"),
         },
         {
           name: "Andrey 101",
-          tokenAddress: "0xabc123def456",
+          address: "0xabc123def456",
           avatarUrl: require("@/shared/assets/images/avatars/avatar-3.png"),
         },
       ],
@@ -48,7 +48,7 @@ export const useContactsStore = create<
       removeContact(address: string) {
         set((state) => ({
           contacts: state.contacts.filter(
-            (contact) => contact.tokenAddress !== address
+            (contact) => contact.address !== address
           ),
         }));
       },

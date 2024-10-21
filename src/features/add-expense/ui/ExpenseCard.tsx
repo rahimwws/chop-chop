@@ -18,7 +18,7 @@ const ExpenseCard = ({
 }) => {
   const [price, setPrice] = useState<string>("");
   const user = useContactsStore((store) =>
-    store.contacts.find((item) => item.tokenAddress === address)
+    store.contacts.find((item) => item.address === address)
   );
 
   useEffect(() => {

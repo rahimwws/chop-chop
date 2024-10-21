@@ -1,33 +1,25 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
-import HistoryCard from "./HistoryCard";
-import Typography from "@/shared/ui/Typography";
+import { View } from "react-native";
+import React, { useState, useMemo } from "react";
 import { useGroupsStore } from "@/entities/groups/lib/store";
-
+import { useUserStore } from "@/shared/lib/store/userStore";
+import MonthHeader from "./MonthHeader";
+import BillsList from "./BillsList";
+import { filterBillsByMonth } from "../model/format";
 const HistoryList = () => {
   const groups = useGroupsStore((state) => state.groups);
+  const userAddress = useUserStore((state) => state.address);
+
+  const selectedMonth = new Date().getMonth();
+
+  const filteredBills = useMemo(
+    () => filterBillsByMonth(groups, selectedMonth),
+    [groups, selectedMonth]
+  );
 
   return (
-    <View
-      style={{
-        marginVertical: "5%",
-      }}
-    >
-      <Typography font="r-m" size={18} align="left">
-        September 2024
-      </Typography>
-
-      {groups.map((group) =>
-        group.bills.map((bill, index) => (
-          <HistoryCard
-            key={`${group.id}-${index}`}
-            groupName={group.name}
-            billName={bill.name}
-            billSum={bill.sum}
-            billDate={bill.date}
-          />
-        ))
-      )}
+    <View style={{ marginVertical: "5%" }}>
+      <MonthHeader selectedMonth={selectedMonth} />
+      <BillsList bills={filteredBills} userAddress={userAddress} />
     </View>
   );
 };

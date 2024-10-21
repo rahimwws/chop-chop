@@ -37,7 +37,7 @@ export const useAddContact = () => {
     if (
       contacts.some(
         (contact) =>
-          contact.tokenAddress.toLowerCase() === contactAddress.toLowerCase()
+          contact.address.toLowerCase() === contactAddress.toLowerCase()
       )
     ) {
       Alert.alert("Error", "A contact with this address already exists");
@@ -47,7 +47,7 @@ export const useAddContact = () => {
     console.log("Adding contact:", contactAddress);
     Alert.alert("Success", `Contact added: ${contactAddress}`);
     addContact({
-      tokenAddress: contactAddress,
+      address: contactAddress,
       name: contactAddress.slice(0, 5),
       avatarUrl: require("@/shared/assets/images/avatars/avatar-1.png"),
     });

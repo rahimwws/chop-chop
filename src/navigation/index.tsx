@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Introduction from "./Introduction";
 import Service from "./Service";
-import { userStore } from "@/shared/lib/store/userStore";
+import { useUserStore } from "@/shared/lib/store/userStore";
 
 SplashScreen.preventAutoHideAsync();
 const Index = () => {
   const Stack = createStackNavigator();
-  const address = userStore((store) => store.address);
+  const address = useUserStore((store) => store.address);
   const initialRoute = address ? "Service" : "Introduction";
   const [loaded] = useFonts({
     "ar-r": require("../../assets/fonts/Arame.ttf"),

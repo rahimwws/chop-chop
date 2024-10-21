@@ -14,7 +14,7 @@ const ContactList = ({
 
   // Фильтруем контакты, которых нет в списке участников
   const availableContacts = contacts.filter(
-    (contact) => !participants.includes(contact.tokenAddress)
+    (contact) => !participants.includes(contact.address)
   );
   console.log("render");
 
@@ -28,7 +28,7 @@ const ContactList = ({
     >
       {participants.map((participant, index) => {
         const participantContact = contacts.find(
-          (contact) => contact.tokenAddress === participant
+          (contact) => contact.address === participant
         );
 
         return (
@@ -55,7 +55,7 @@ const ContactList = ({
           text={contact.name}
           isSelected={false}
           setIsSelected={() => {
-            setParticipants([...participants, contact.tokenAddress]);
+            setParticipants([...participants, contact.address]);
           }}
           image={
             contact.avatarUrl || "@/shared/assets/images/avatars/avatar-1.png"

@@ -1,21 +1,41 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
 import { formatDate } from "../model/format";
+import { useUserStore } from "@/shared/lib/store/userStore";
 
 const HistoryCard = ({
   groupName,
   billName,
-  billSum,
   billDate,
+  userOwe,
+  paidBy,
 }: {
   groupName: string;
   billName: string;
-  billSum: number;
   billDate: number;
+  userOwe: number;
+  paidBy: string;
 }) => {
   const formattedDate = formatDate(new Date(billDate));
+  const userAddress = useUserStore((store) => store.address);
+  const isUserPayer = paidBy === userAddress;
+
+  const getDebtText = () => {
+    if (isUserPayer) {
+      return "You paid";
+    } else if (userOwe > 0) {
+      return `You owe: ${userOwe.toFixed(2)}$`;
+    } else if (userOwe < 0) {
+      return `You are owed: ${Math.abs(userOwe).toFixed(2)}$`;
+    } else {
+      return "No debt";
+    }
+  };
+
+  const debtColor = isUserPayer ? "green" : userOwe > 0 ? "red" : "blue";
+
   return (
     <View
       style={{
@@ -46,10 +66,10 @@ const HistoryCard = ({
         }}
       >
         <Typography align="left" styles={{}} size={18}>
-          {`${groupName} added “${billName}”`}
+          {`${groupName} added "${billName}"`}
         </Typography>
-        <Typography color="red" font="r-m">
-          You owe: {billSum}$
+        <Typography color={debtColor} font="r-m">
+          {getDebtText()}
         </Typography>
       </View>
     </View>

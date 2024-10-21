@@ -4,7 +4,7 @@ import Avatar from "@/shared/ui/Avatar";
 import { colors } from "@/shared/lib/theme";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import Typography from "@/shared/ui/Typography";
-import { userStore } from "@/shared/lib/store/userStore";
+import { useUserStore } from "@/shared/lib/store/userStore";
 
 const ProfileView = ({
   openSheet,
@@ -13,9 +13,9 @@ const ProfileView = ({
   openSheet: () => void;
   image: string;
 }) => {
-  const username = userStore((store) => store.username);
-  const setUsername = userStore((store) => store.setUsername);
-  const address = userStore((store) => store.address);
+  const username = useUserStore((store) => store.username);
+  const setUsername = useUserStore((store) => store.setUsername);
+  const address = useUserStore((store) => store.address);
   return (
     <View
       style={{

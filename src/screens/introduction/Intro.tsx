@@ -7,11 +7,11 @@ import LargeButton from "@/shared/ui/Button/LargeButton";
 import { ModalController } from "@reown/appkit-core-react-native";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { useAccount } from "wagmi";
-import { userStore } from "@/shared/lib/store/userStore";
+import { useUserStore } from "@/shared/lib/store/userStore";
 const Intro = () => {
   const navigation = useAppNavigation();
   const { isConnected, address } = useAccount();
-  const setAddress = userStore((store) => store.setAddress);
+  const setAddress = useUserStore((store) => store.setAddress);
   useEffect(() => {
     if (isConnected && address) {
       navigation.navigate("ChooseToken");
