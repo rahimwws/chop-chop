@@ -24,6 +24,7 @@ const PurchasePeople = ({ bill }: { bill: Bill }) => {
               flexDirection: "row",
               gap: 10,
             }}
+            key={index}
           >
             <View
               style={{

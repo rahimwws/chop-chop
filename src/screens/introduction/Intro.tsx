@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@/shared/ui/Typography";
 import ScreenLayout from "@/shared/ui/Layout";
 import { colors } from "@/shared/lib/theme";
@@ -6,8 +6,18 @@ import { Image, View } from "react-native";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { ModalController } from "@reown/appkit-core-react-native";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import { useAccount } from "wagmi";
+import { userStore } from "@/shared/lib/store/userStore";
 const Intro = () => {
   const navigation = useAppNavigation();
+  const { isConnected, address } = useAccount();
+  const setAddress = userStore((store) => store.setAddress);
+  useEffect(() => {
+    if (isConnected && address) {
+      navigation.navigate("ChooseToken");
+      setAddress(address);
+    }
+  }, [isConnected]);
   return (
     <ScreenLayout styles={{ backgroundColor: colors.blue }}>
       <View
@@ -33,8 +43,7 @@ const Intro = () => {
       <LargeButton
         text="CONNECT WALLET"
         action={() => {
-          navigation.navigate("ChooseChains");
-          // ModalController.open();
+          ModalController.open();
         }}
       />
     </ScreenLayout>

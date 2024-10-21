@@ -28,17 +28,6 @@ const AddExpense = () => {
       />
       <ExpenseName type={params.type} name={group.name} />
       <ExpenseDescription group={group} type={params.type} />
-      <LargeButton
-        text="Add Payment"
-        bg={colors.blue}
-        textColor="white"
-        styles={{
-          height: 40,
-          marginVertical: "5%",
-        }}
-        isRoute
-        route="Payments"
-      />
     </ScreenLayout>
   );
 };

@@ -2,8 +2,20 @@ import { View, Text } from "react-native";
 import React from "react";
 import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
+import { formatDate } from "../model/format";
 
-const HistoryCard = () => {
+const HistoryCard = ({
+  groupName,
+  billName,
+  billSum,
+  billDate,
+}: {
+  groupName: string;
+  billName: string;
+  billSum: number;
+  billDate: number;
+}) => {
+  const formattedDate = formatDate(new Date(billDate));
   return (
     <View
       style={{
@@ -20,23 +32,24 @@ const HistoryCard = () => {
           height: 60,
           borderRadius: 5,
           backgroundColor: colors.lightGray,
+          alignItems: "center",
+          justifyContent: "center",
         }}
-      ></View>
+      >
+        <Typography size={18} color="black" font="r-m">
+          {formattedDate}
+        </Typography>
+      </View>
       <View
         style={{
           alignItems: "flex-start",
         }}
       >
-        <Typography
-          align="left"
-          styles={{
-            width: "70%",
-          }}
-        >
-          Alexander added “Millenium Dinner” in Group Number 1
+        <Typography align="left" styles={{}} size={18}>
+          {`${groupName} added “${billName}”`}
         </Typography>
         <Typography color="red" font="r-m">
-          You owe: 25$
+          You owe: {billSum}$
         </Typography>
       </View>
     </View>

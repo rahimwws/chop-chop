@@ -1,15 +1,31 @@
-import { View, TextInput, Image } from "react-native";
-import React, { useState } from "react";
+import { View, TextInput, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import CheckBox from "@/shared/ui/CheckBox";
 import { useContactsStore } from "@/entities/contacts/lib/store";
 
-const ExpenseCard = ({ address }: { address: string }) => {
-  const [price, setPrice] = useState<string>();
+const ExpenseCard = ({
+  address,
+  updatePrice,
+  selected,
+  setPaidBy,
+}: {
+  address: string;
+  updatePrice: (address: string, price: number) => void;
+  selected: boolean;
+  setPaidBy: (address: string) => void;
+}) => {
+  const [price, setPrice] = useState<string>("");
   const user = useContactsStore((store) =>
     store.contacts.find((item) => item.tokenAddress === address)
   );
+
+  useEffect(() => {
+    const priceValue = parseFloat(price) || 0;
+    updatePrice(address, priceValue);
+  }, [price]);
+
   return (
     <View
       style={{
@@ -37,8 +53,9 @@ const ExpenseCard = ({ address }: { address: string }) => {
         />
         <Typography>{user?.name}</Typography>
       </View>
+
       <TextInput
-        defaultValue={price}
+        value={price}
         onChangeText={(text) => setPrice(text)}
         placeholder="0.00"
         style={{
@@ -52,10 +69,10 @@ const ExpenseCard = ({ address }: { address: string }) => {
         }}
         keyboardType="numeric"
         returnKeyType="done"
-        maxLength={3}
         placeholderTextColor={colors.lightBlue}
       />
-      <CheckBox selected setSelected={() => {}} />
+
+      <CheckBox selected={selected} setSelected={() => setPaidBy(address)} />
     </View>
   );
 };

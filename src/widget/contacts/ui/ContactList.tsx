@@ -8,6 +8,7 @@ import {
   useGroupsStore,
 } from "@/entities/groups/lib/store";
 const ContactList = () => {
+  // add memo
   const { contacts } = useContactsStore();
   const { groups } = useGroupsStore();
 

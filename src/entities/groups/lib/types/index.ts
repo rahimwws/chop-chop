@@ -4,6 +4,7 @@ export interface Bill {
   spenersAddresses: string[];
   spentAmounts: number[];
   name: string;
+  date: number;
 }
 
 export interface Group {

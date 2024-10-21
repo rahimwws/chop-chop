@@ -5,7 +5,6 @@ import { Sheet } from "@/shared/ui/Sheets";
 import Portal from "@/components/portal/Portal";
 import { AVATARS } from "@/shared/config/avatars";
 import { Image, ScrollView, TouchableOpacity, View } from "react-native";
-import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 
 const AvatarSheet = ({
@@ -13,7 +12,7 @@ const AvatarSheet = ({
   setImage,
 }: {
   bottomSheetRef: RefObject<BottomSheetMethods>;
-  setImage: React.Dispatch<React.SetStateAction<string>>;
+  setImage: (avatar: string) => void;
 }) => {
   const snapPoints = useMemo(() => ["60%"], []);
 

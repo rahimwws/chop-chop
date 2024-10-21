@@ -4,6 +4,7 @@ import Avatar from "@/shared/ui/Avatar";
 import { colors } from "@/shared/lib/theme";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import Typography from "@/shared/ui/Typography";
+import { userStore } from "@/shared/lib/store/userStore";
 
 const ProfileView = ({
   openSheet,
@@ -12,7 +13,9 @@ const ProfileView = ({
   openSheet: () => void;
   image: string;
 }) => {
-  const [name, setName] = useState<string>("");
+  const username = userStore((store) => store.username);
+  const setUsername = userStore((store) => store.setUsername);
+  const address = userStore((store) => store.address);
   return (
     <View
       style={{
@@ -38,8 +41,8 @@ const ProfileView = ({
           }}
         >
           <TextInput
-            defaultValue={name}
-            onChangeText={(text) => setName(text)}
+            defaultValue={username}
+            onChangeText={(text) => setUsername(text)}
             placeholder="Enter username"
             style={{
               borderBottomWidth: 1,
@@ -62,7 +65,7 @@ const ProfileView = ({
             }}
           >
             <Typography color="lightBlue" size={18}>
-              0x06735E3E25Ab0x06735E3E25Ab0x06735E3E25Ab
+              {address}
             </Typography>
           </View>
         </View>

@@ -8,12 +8,12 @@ import { ScrollView, Switch, View } from "react-native";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import LargeButton from "@/shared/ui/Button/LargeButton";
+import { userStore } from "@/shared/lib/store/userStore";
 
 const Profile = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const [profileImage, setProfileImage] = useState<string>("");
-  const { address } = useAccount();
-  // console.log(address);
+  const profileImage = userStore((store) => store.avatar);
+  const setProfileImage = userStore((store) => store.setAvatar);
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   return (

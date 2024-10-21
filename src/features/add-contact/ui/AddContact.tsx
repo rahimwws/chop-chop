@@ -1,10 +1,13 @@
-import { View, Text, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import LargeButton from "@/shared/ui/Button/LargeButton";
+import { useAddContact } from "../hooks/useAddContact";
 
 const AddContact = () => {
+  const { address, setAddress, handleAddContact, isLoading } = useAddContact();
+
   return (
     <View
       style={{
@@ -19,7 +22,7 @@ const AddContact = () => {
         Add new Contact
       </Typography>
       <TextInput
-        placeholder="Enter Wallet Number or EMC Name"
+        placeholder="Enter Wallet Address or ENS Name"
         style={{
           borderWidth: 1,
           borderColor: colors.blue,
@@ -31,15 +34,19 @@ const AddContact = () => {
           fontSize: 16,
         }}
         placeholderTextColor={colors.lightBlue}
+        value={address}
+        onChangeText={setAddress}
       />
       <LargeButton
-        text="Add"
+        text={isLoading ? "Loading..." : "Add"}
         bg={colors.blue}
         textColor="white"
         styles={{
           marginBottom: 10,
           height: 40,
         }}
+        action={handleAddContact}
+        disabled={isLoading}
       />
     </View>
   );

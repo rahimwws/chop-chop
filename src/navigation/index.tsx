@@ -1,13 +1,16 @@
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Introduction from "./Introduction";
 import Service from "./Service";
+import { userStore } from "@/shared/lib/store/userStore";
 
 SplashScreen.preventAutoHideAsync();
 const Index = () => {
   const Stack = createStackNavigator();
+  const address = userStore((store) => store.address);
+  const initialRoute = address ? "Service" : "Introduction";
   const [loaded] = useFonts({
     "ar-r": require("../../assets/fonts/Arame.ttf"),
     "ar-b": require("../../assets/fonts/Arame-Bold.ttf"),
@@ -31,6 +34,7 @@ const Index = () => {
       screenOptions={{
         headerShown: false,
       }}
+      initialRouteName={initialRoute}
     >
       <Stack.Screen name="Introduction" component={Introduction} />
       <Stack.Screen name="Service" component={Service} />
