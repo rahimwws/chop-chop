@@ -1,5 +1,5 @@
-export function getFormattedDate() {
-  const today = new Date();
+export function getFormattedDate(timestamp: number = Date.now()) {
+  const date = new Date(timestamp);
   const months = [
     "January",
     "February",
@@ -15,8 +15,8 @@ export function getFormattedDate() {
     "December",
   ];
 
-  const day = today.getDate();
-  const month = months[today.getMonth()];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
 
   function getDayWithSuffix(day: number) {
     if (day > 3 && day < 21) return `${day}th`;
@@ -32,5 +32,12 @@ export function getFormattedDate() {
     }
   }
 
-  return `Today ${getDayWithSuffix(day)} ${month}`;
+  const formattedDay = getDayWithSuffix(day);
+
+  const today = new Date();
+  if (date.toDateString() === today.toDateString()) {
+    return `Today ${formattedDay} ${month}`;
+  } else {
+    return `${formattedDay} ${month}`;
+  }
 }

@@ -1,14 +1,15 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { storage } from "../storage";
+import { ImageProps } from "react-native";
 
 interface useUserStore {
   address: string;
   username: string;
-  avatar: string;
+  avatar: ImageProps;
   setAddress: (address: string) => void;
   setUsername: (username: string) => void;
-  setAvatar: (avatar: string) => void;
+  setAvatar: (avatar: ImageProps) => void;
 }
 
 export const useUserStore = create<useUserStore>()(

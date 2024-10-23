@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useEnsAddress } from "wagmi";
 import { normalize } from "viem/ens";
-import { Alert } from "react-native";
+import { Alert, ImageProps } from "react-native";
 import { useContactsStore } from "@/entities/contacts/lib/store";
+import { useAppNavigation } from "@/shared/lib/navigation";
 
 export const useAddContact = () => {
   const [address, setAddress] = useState<string>("");
   const addContact = useContactsStore((store) => store.addContact);
   const contacts = useContactsStore.getState().contacts;
+  const navigation = useAppNavigation();
   const {
     data: ensAddress,
     isLoading,
@@ -16,9 +18,14 @@ export const useAddContact = () => {
     name: address ? normalize(address) : undefined,
   });
 
-  const handleAddContact = () => {
+  const handleAddContact = (name: string, avatarUrl: ImageProps) => {
     if (!address) {
       Alert.alert("Error", "Please enter a wallet address or ENS name");
+      return;
+    }
+
+    if (!name) {
+      Alert.alert("Error", "Please enter a contact name");
       return;
     }
 
@@ -44,14 +51,14 @@ export const useAddContact = () => {
       return;
     }
 
-    console.log("Adding contact:", contactAddress);
-    Alert.alert("Success", `Contact added: ${contactAddress}`);
+    Alert.alert("Success", `Contact added: ${name} (${contactAddress})`);
     addContact({
       address: contactAddress,
-      name: contactAddress.slice(0, 5),
-      avatarUrl: require("@/shared/assets/images/avatars/avatar-1.png"),
+      name: name,
+      avatarUrl: avatarUrl,
     });
     setAddress("");
+    navigation.navigate("Contact");
   };
 
   return {

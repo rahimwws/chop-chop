@@ -19,15 +19,7 @@ const PaymentList = ({ group }: { group: Group }) => {
         const debts = group.bills.flatMap((x) => billToDebts(x));
         const oweOwed = calcOweIsOwed(debts, b.payerAddress);
         return (
-          <PaymentCard
-            key={index}
-            date={{ number: 21, month: "SEP" }}
-            place={b.name}
-            paidBy={b.payerAddress}
-            billAmount={b.sum}
-            userOwe={oweOwed.userIsOwed}
-            bill={b}
-          />
+          <PaymentCard key={index} userOwe={oweOwed.userIsOwed} bill={b} />
         );
       })}
     </View>

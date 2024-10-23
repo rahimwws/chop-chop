@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import Header from "@/components/header";
 import {
   ActionSheet,
@@ -26,12 +26,17 @@ const GroupDetail = () => {
   const { params } = useRoute<routeT>();
   const [mode, setMode] = useState<"payments" | "participants">("payments");
   const bottomSheetRef = useRef<BottomSheet>(null);
+
   const openSheet = () => {
     bottomSheetRef.current?.expand();
   };
-  useEffect(() => {
-    if (params.group) setDetail(params.group);
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      if (params.group) {
+        setDetail(params.group);
+      }
+    }, [params.group])
+  );
   if (!params.group) return null;
   return (
     <ScreenLayout>

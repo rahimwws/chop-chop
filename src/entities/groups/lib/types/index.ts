@@ -5,6 +5,7 @@ export interface Bill {
   spentAmounts: number[];
   name: string;
   date: number;
+  currency: string;
 }
 
 export interface Group {

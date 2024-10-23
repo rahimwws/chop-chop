@@ -6,31 +6,25 @@ import { colors } from "@/shared/lib/theme";
 import Typography from "@/shared/ui/Typography";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { Bill } from "@/entities/groups/lib/types";
+import { formatDate } from "@/widget/history/model/format";
 
 const shortenAddress = (address: string) => {
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 };
 
 export default function PaymentCard({
-  date,
-  place,
-  paidBy,
-  billAmount,
   userOwe,
   bill,
 }: {
-  date: { number: number; month: string };
-  place: string;
-  paidBy: string;
-  billAmount: number;
   userOwe: number;
   bill: Bill;
 }) {
   const { data: ensName } = useEnsName({
-    address: paidBy as any,
+    address: bill.payerAddress as any,
     chainId: mainnet.id,
   });
   const navigation = useAppNavigation();
+  const formattedDate = formatDate(new Date(bill.date));
   return (
     <TouchableOpacity
       style={{ flexDirection: "row", gap: 5 }}
@@ -48,8 +42,9 @@ export default function PaymentCard({
           flexDirection: "column",
         }}
       >
-        <Typography font="ar-r">{date.number}TH</Typography>
-        <Typography font="ar-r">{date.month}</Typography>
+        <Typography font="ar-r" styles={{ lineHeight: 17 }}>
+          {formattedDate}
+        </Typography>
       </View>
       <View
         style={{
@@ -59,23 +54,25 @@ export default function PaymentCard({
           alignItems: "flex-start",
         }}
       >
-        <Typography color="blue">{place}</Typography>
+        <Typography color="blue">{bill.name}</Typography>
 
         <Typography size={14}>
           <Typography size={14} color="blue">
             Paid:
           </Typography>
-          {ensName || shortenAddress(paidBy)}
+          {ensName || shortenAddress(bill.payerAddress)}
         </Typography>
 
         <Typography>
           <Typography color="blue">Bill:</Typography>
-          {billAmount}$
+          {bill.sum} {bill.currency}
         </Typography>
       </View>
 
       <Typography color="red">You owe</Typography>
-      <Typography color="red">{userOwe} $</Typography>
+      <Typography color="red">
+        {userOwe} {bill.currency}
+      </Typography>
     </TouchableOpacity>
   );
 }

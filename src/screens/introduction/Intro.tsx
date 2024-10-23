@@ -14,7 +14,7 @@ const Intro = () => {
   const setAddress = useUserStore((store) => store.setAddress);
   useEffect(() => {
     if (isConnected && address) {
-      navigation.navigate("ChooseToken");
+      navigation.navigate("ChooseChains");
       setAddress(address);
     }
   }, [isConnected]);

@@ -1,71 +1,48 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useEffect } from "react";
 import { View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { colors } from "@/shared/lib/theme";
 import ExpenseCard from "./ExpenseCard";
 import { Group } from "@/entities/groups/lib/types";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import LargeButton from "@/shared/ui/Button/LargeButton";
-import { useUpdatePrice } from "../lib/hook/useUpdatePrice";
-import { validateSum } from "../model/validation/validateSum";
 import Typography from "@/shared/ui/Typography";
-import { useGroupsStore } from "@/entities/groups/lib/store";
-import { useAddNewBill } from "../lib/hook/useAddNewBill";
 import Description from "@/shared/assets/svg/icons/description.svg";
-import Money from "@/shared/assets/svg/icons/money.svg";
+import { useExpense } from "../lib/hook/useExpense";
+import { useUserStore } from "@/shared/lib/store/userStore";
+import { useContactsStore } from "@/entities/contacts/lib/store";
+
 const ExpenseDescription = ({
   group,
-  type,
+  selectedDate,
+  currency,
 }: {
   group: Group;
-  type: "personal" | "group";
+  selectedDate: number;
+  currency: string;
 }) => {
-  const { participantsPrices, updatePrice } = useUpdatePrice();
-  const [description, setDescription] = useState<string>("");
-  const [sum, setSum] = useState<string>("");
-  const [paidBy, setPaidBy] = useState<string | null>(null);
+  const {
+    description,
+    setDescription,
+    sum,
+    setSum,
+    paidBy,
+    setPaidBy,
+    updatePrice,
+    handleAddPayment,
+  } = useExpense(group, selectedDate, currency);
+
   const navigation = useAppNavigation();
 
-  const groups = useGroupsStore((store) => store.groups);
-  const setGroups = useGroupsStore((store) => store.setGroups);
+  const userToken = useUserStore((store) => store.address);
+  const userName = useUserStore((store) => store.username);
+  const userAvatarUrl = useUserStore((store) => store.avatar);
+  const contacts = useContactsStore((store) => store.contacts);
 
-  const { addNewBill } = useAddNewBill(groups, setGroups);
-
-  const sumGroup = useMemo(
-    () =>
-      Object.values(participantsPrices).reduce(
-        (total, price) => total + price,
-        0
-      ),
-    [participantsPrices]
-  );
-
-  const action = useCallback(() => {
-    const result = validateSum(sum, sumGroup);
-
+  useEffect(() => {
     if (!paidBy) {
-      Alert.alert("Error", "Please select the person who paid the bill.");
-      return;
+      setPaidBy(userToken);
     }
-
-    if (result.success) {
-      addNewBill(group.id, description, sumGroup, paidBy, participantsPrices);
-
-      Alert.alert("Success", "Bill has been added successfully!");
-      setDescription("");
-      setSum("");
-      setPaidBy(null);
-    } else {
-      Alert.alert("Error", result.message);
-    }
-  }, [
-    sum,
-    sumGroup,
-    paidBy,
-    description,
-    participantsPrices,
-    addNewBill,
-    group.id,
-  ]);
+  }, []);
 
   return (
     <>
@@ -87,7 +64,6 @@ const ExpenseDescription = ({
               justifyContent: "center",
             }}
           >
-            {/* Иконка описания */}
             <Description />
           </View>
           <TextInput
@@ -118,7 +94,9 @@ const ExpenseDescription = ({
             }}
             onPress={() => navigation.navigate("Payments")}
           >
-            <Money />
+            <Typography size={20} color="white">
+              {currency}
+            </Typography>
           </TouchableOpacity>
           <TextInput
             value={sum}
@@ -137,7 +115,6 @@ const ExpenseDescription = ({
             placeholderTextColor={colors.lightBlue}
           />
         </View>
-
         <Typography
           color="blue"
           align="right"
@@ -149,16 +126,33 @@ const ExpenseDescription = ({
         </Typography>
 
         <View style={{ marginTop: "2%", gap: 10 }}>
-          {type === "group" &&
-            group.participants.map((item, index) => (
-              <ExpenseCard
-                key={index}
-                address={item}
-                updatePrice={updatePrice}
-                selected={paidBy === item}
-                setPaidBy={setPaidBy}
-              />
-            ))}
+          {group &&
+            group.participants
+              .filter((token) => token !== userToken)
+              .map((token) => {
+                const contact = contacts.find((c) => c.address === token);
+                return contact ? (
+                  <ExpenseCard
+                    key={token}
+                    name={contact.name}
+                    avatarUrl={contact.avatarUrl}
+                    token={token}
+                    updatePrice={updatePrice}
+                    selected={paidBy === token}
+                    setPaidBy={setPaidBy}
+                  />
+                ) : null;
+              })}
+
+          <ExpenseCard
+            key={userToken}
+            name={userName}
+            avatarUrl={userAvatarUrl}
+            token={userToken}
+            updatePrice={updatePrice}
+            selected={paidBy === userToken}
+            setPaidBy={setPaidBy}
+          />
         </View>
       </View>
 
@@ -170,7 +164,7 @@ const ExpenseDescription = ({
           height: 40,
           marginVertical: "5%",
         }}
-        action={action}
+        action={handleAddPayment}
       />
     </>
   );

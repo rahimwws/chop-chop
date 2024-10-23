@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import Header from "@/components/header";
 import { ExpenseDescription, ExpenseName } from "@/features/add-expense";
-import LargeButton from "@/shared/ui/Button/LargeButton";
-import { colors } from "@/shared/lib/theme";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useGroupDetailStore } from "@/shared/lib/store/groupDetail";
+
 type RouteParams = {
   type: {
     type: "personal" | "group";
+    selectedDate?: number;
+    currency?: string;
   };
 };
 
 type routeT = RouteProp<RouteParams, "type">;
+
 const AddExpense = () => {
   const group = useGroupDetailStore((store) => store.groupDetails);
   const { params } = useRoute<routeT>();
-  if (!group) return null;
+  const [selectedDate, setSelectedDate] = useState(Date.now());
+  const [currency, setCurrency] = useState("$");
+
+  useEffect(() => {
+    if (params.selectedDate) setSelectedDate(params.selectedDate);
+    if (params.currency) setCurrency(params.currency);
+  }, [params]);
+
   return (
     <ScreenLayout>
       <Header
@@ -26,8 +35,18 @@ const AddExpense = () => {
             : "Add Group Expense"
         }
       />
-      <ExpenseName type={params.type} name={group.name} />
-      <ExpenseDescription group={group} type={params.type} />
+      <ExpenseName
+        type={params.type}
+        name={group?.name}
+        selectedDate={selectedDate}
+      />
+      {params.type === "group" && (
+        <ExpenseDescription
+          group={group!}
+          selectedDate={selectedDate}
+          currency={currency}
+        />
+      )}
     </ScreenLayout>
   );
 };

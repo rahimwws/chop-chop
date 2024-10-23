@@ -1,37 +1,56 @@
 import { View, TextInput } from "react-native";
-import React from "react";
-import Typography from "@/shared/ui/Typography";
+import React, { useState, useEffect } from "react";
 import { colors } from "@/shared/lib/theme";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { useAddContact } from "../hooks/useAddContact";
+import { AVATARS } from "@/shared/config/avatars";
 
 const AddContact = () => {
   const { address, setAddress, handleAddContact, isLoading } = useAddContact();
+
+  const [name, setName] = useState("");
+  const [avatarIndex, setAvatarIndex] = useState(0);
+
+  useEffect(() => {
+    setAvatarIndex(Math.floor(Math.random() * AVATARS.length));
+  }, []);
+
+  const avatarSource = AVATARS[avatarIndex].src;
 
   return (
     <View
       style={{
         marginVertical: "5%",
         alignItems: "flex-start",
-        backgroundColor: colors.lightGray,
-        padding: 10,
-        borderRadius: 5,
       }}
     >
-      <Typography font="ar-r" size={24}>
-        Add new Contact
-      </Typography>
+      <TextInput
+        placeholder="Contact Name"
+        style={{
+          borderWidth: 1,
+          borderColor: colors.blue,
+          width: "100%",
+          padding: 10,
+          borderRadius: 5,
+          fontFamily: "r-r",
+          fontSize: 16,
+          marginBottom: 10,
+        }}
+        placeholderTextColor={colors.lightBlue}
+        value={name}
+        onChangeText={setName}
+      />
       <TextInput
         placeholder="Enter Wallet Address or ENS Name"
         style={{
           borderWidth: 1,
           borderColor: colors.blue,
           width: "100%",
-          marginVertical: "5%",
           padding: 10,
           borderRadius: 5,
           fontFamily: "r-r",
           fontSize: 16,
+          marginBottom: 20,
         }}
         placeholderTextColor={colors.lightBlue}
         value={address}
@@ -45,8 +64,8 @@ const AddContact = () => {
           marginBottom: 10,
           height: 40,
         }}
-        action={handleAddContact}
-        disabled={isLoading}
+        action={() => handleAddContact(name, avatarSource)}
+        disabled={isLoading || !name || !address}
       />
     </View>
   );

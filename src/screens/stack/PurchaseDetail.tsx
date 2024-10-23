@@ -8,6 +8,9 @@ import PurchasePeople from "@/components/purchase-people";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useGroupsStore } from "@/entities/groups/lib/store";
 import { Bill } from "@/entities/groups/lib/types";
+import { getFormattedDate } from "@/features/add-expense/model/format";
+import { useContactsStore } from "@/entities/contacts/lib/store";
+import { useUserStore } from "@/shared/lib/store/userStore";
 type RouteParams = {
   bill: {
     bill: Bill;
@@ -17,8 +20,16 @@ type RouteParams = {
 type routeT = RouteProp<RouteParams, "bill">;
 const PurchaseDetail = () => {
   const { params } = useRoute<routeT>();
-  console.log(params.bill);
+  const contacts = useContactsStore((store) => store.contacts);
+  const username = useUserStore((store) => store.username);
 
+  const getPayerName = (address: string) => {
+    const contact = contacts.find((c) => c.address === address);
+    if (contact) {
+      return contact.name;
+    }
+    return username;
+  };
   return (
     <ScreenLayout>
       <Header title="" type="stack" />
@@ -48,8 +59,9 @@ const PurchaseDetail = () => {
         <Typography size={22} styles={{ marginVertical: "1%" }} font="r-m">
           {params.bill.sum}$
         </Typography>
-        <Typography>
-          Added by {params.bill.payerAddress} on 19th October 2024
+        <Typography align="left">
+          Added by {getPayerName(params.bill.payerAddress)} on{" "}
+          {getFormattedDate(params.bill.date)}
         </Typography>
       </View>
       <PurchasePeople bill={params.bill} />

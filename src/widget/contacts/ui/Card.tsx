@@ -60,19 +60,21 @@ const Card = ({ contact, userOwe, userIsOwed }: CardProps) => {
           </Typography>
         </View>
       </View>
-      <LargeButton
-        styles={{
-          width: "35%",
-          height: 30,
-        }}
-        text="Settle Up"
-        textStyle={{
-          fontSize: 18,
-        }}
-        textColor="white"
-        bg={colors.blue}
-        action={() => navigation.navigate("Expense", { type: "personal" })}
-      />
+      {userOwe !== 0 && userIsOwed !== 0 && (
+        <LargeButton
+          styles={{
+            width: "35%",
+            height: 30,
+          }}
+          text="Settle Up"
+          textStyle={{
+            fontSize: 18,
+          }}
+          textColor="white"
+          bg={colors.blue}
+          action={() => navigation.navigate("Expense", { type: "personal" })}
+        />
+      )}
     </View>
   );
 };

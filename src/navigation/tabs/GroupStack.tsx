@@ -1,5 +1,3 @@
-import { View, Text } from "react-native";
-import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Groups from "@/screens/tabs/Groups";
 import CreateGroup from "@/screens/stack/CreateGroup";
@@ -9,6 +7,7 @@ import SettleUp from "@/screens/stack/SettleUp";
 import PurchaseDetail from "@/screens/stack/PurchaseDetail";
 import AddExpense from "@/screens/stack/AddExpense";
 import Payments from "@/screens/stack/Payments";
+import Calendar from "@/screens/stack/Calendar";
 
 const GroupStack = () => {
   const Stack = createStackNavigator();
@@ -27,6 +26,7 @@ const GroupStack = () => {
       <Stack.Screen name="PurchaseDetail" component={PurchaseDetail} />
       <Stack.Screen name="Expense" component={AddExpense} />
       <Stack.Screen name="Payments" component={Payments} />
+      <Stack.Screen name="Calendar" component={Calendar} />
     </Stack.Navigator>
   );
 };

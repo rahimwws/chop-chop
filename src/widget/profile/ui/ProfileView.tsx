@@ -5,6 +5,7 @@ import { colors } from "@/shared/lib/theme";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import Typography from "@/shared/ui/Typography";
 import { useUserStore } from "@/shared/lib/store/userStore";
+import * as Clipboard from "expo-clipboard";
 
 const ProfileView = ({
   openSheet,
@@ -16,6 +17,7 @@ const ProfileView = ({
   const username = useUserStore((store) => store.username);
   const setUsername = useUserStore((store) => store.setUsername);
   const address = useUserStore((store) => store.address);
+  const [isCopied, setIsCopied] = useState(false);
   return (
     <View
       style={{
@@ -92,12 +94,16 @@ const ProfileView = ({
           styles={{
             height: 30,
           }}
-          text="Copy"
+          text={isCopied ? "Copied!" : "Copy"}
           textStyle={{
             fontSize: 16,
           }}
           textColor="blue"
           bg={colors.middleGray}
+          action={() => {
+            Clipboard.setStringAsync(address);
+            setIsCopied(true);
+          }}
         />
       </View>
     </View>

@@ -10,7 +10,9 @@ export const useAddNewBill = (
       description: string,
       sumGroup: number,
       paidBy: string,
-      participantsPrices: { [address: string]: number }
+      participantsPrices: { [address: string]: number },
+      date: number,
+      currency: string
     ) => {
       const newBill: Bill = {
         sum: sumGroup,
@@ -18,7 +20,8 @@ export const useAddNewBill = (
         spenersAddresses: Object.keys(participantsPrices),
         spentAmounts: Object.values(participantsPrices),
         name: description,
-        date: Date.now(),
+        date: date,
+        currency,
       };
 
       const updatedGroups = groups.map((g) => {

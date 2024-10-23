@@ -1,3 +1,3 @@
 import AddContact from "./ui/AddContact";
 
-export { AddContact };
+export { AddContact as AddContactService };

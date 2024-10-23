@@ -1,29 +1,29 @@
-import { View, TextInput, Image, TouchableOpacity } from "react-native";
+import { View, TextInput, Image, ImageProps } from "react-native";
 import React, { useState, useEffect } from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import CheckBox from "@/shared/ui/CheckBox";
-import { useContactsStore } from "@/entities/contacts/lib/store";
 
 const ExpenseCard = ({
-  address,
+  name,
+  avatarUrl,
+  token,
   updatePrice,
   selected,
   setPaidBy,
 }: {
-  address: string;
-  updatePrice: (address: string, price: number) => void;
+  name: string;
+  avatarUrl: ImageProps;
+  token: string;
+  updatePrice: (token: string, price: number) => void;
   selected: boolean;
-  setPaidBy: (address: string) => void;
+  setPaidBy: (token: string) => void;
 }) => {
   const [price, setPrice] = useState<string>("");
-  const user = useContactsStore((store) =>
-    store.contacts.find((item) => item.address === address)
-  );
 
   useEffect(() => {
     const priceValue = parseFloat(price) || 0;
-    updatePrice(address, priceValue);
+    updatePrice(token, priceValue);
   }, [price]);
 
   return (
@@ -49,9 +49,9 @@ const ExpenseCard = ({
             borderRadius: 50,
             resizeMode: "contain",
           }}
-          source={user?.avatarUrl}
+          source={avatarUrl}
         />
-        <Typography>{user?.name}</Typography>
+        <Typography>{name}</Typography>
       </View>
 
       <TextInput
@@ -72,7 +72,7 @@ const ExpenseCard = ({
         placeholderTextColor={colors.lightBlue}
       />
 
-      <CheckBox selected={selected} setSelected={() => setPaidBy(address)} />
+      <CheckBox selected={selected} setSelected={() => setPaidBy(token)} />
     </View>
   );
 };

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Groups from "@/screens/tabs/Groups";
 import Profile from "@/screens/tabs/Profile";
-import Contact from "@/screens/tabs/Contact";
 import History from "@/screens/tabs/History";
 import AccountSVG from "@/shared/assets/svg/tabs/account-svg.svg";
 import ContactSVG from "@/shared/assets/svg/tabs/contacts-svg.svg";
@@ -14,6 +13,7 @@ import CustomTabButton from "@/components/tabbar/CustomButton";
 import GroupStack from "./tabs/GroupStack";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { TouchableOpacity } from "react-native";
+import ContactStack from "./tabs/ContactStack";
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
   const [route, setRoute] = useState<"contact" | "group">("group");
@@ -63,9 +63,10 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Contacts"
-        component={Contact}
+        name="ContactStack"
+        component={ContactStack}
         options={{
+          title: "Contacts",
           tabBarIcon: () => {
             return <ContactSVG width={26} height={26} />;
           },
@@ -76,7 +77,7 @@ const Tabs = () => {
                 activeOpacity={0.8}
                 onPress={() => {
                   setRoute("contact");
-                  navigation.navigate("Contacts");
+                  navigation.navigate("ContactStack");
                 }}
               />
             );
@@ -97,10 +98,10 @@ const Tabs = () => {
           },
           tabBarButton: (props) => {
             const handlePress = () => {
-              if (route === "contact") {
-                navigation.navigate("Expense", { type: "personal" });
-              } else {
+              if (route === "group") {
                 navigation.navigate("Expense", { type: "group" });
+              } else {
+                navigation.navigate("Expense", { type: "personal" });
               }
             };
 

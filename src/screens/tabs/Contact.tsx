@@ -4,11 +4,10 @@ import Header from "@/components/header";
 import { Balance, ContactList } from "@/widget/contacts";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { colors } from "@/shared/lib/theme";
-import { AddContact } from "@/features/add-contact";
+
 import { Image, ScrollView } from "react-native";
 
 const Contact = () => {
-  const [add, setAdd] = useState<boolean>(false);
   return (
     <ScreenLayout pb={0}>
       <ScrollView
@@ -29,7 +28,8 @@ const Contact = () => {
             marginBottom: 10,
             height: 40,
           }}
-          action={() => setAdd(!add)}
+          isRoute
+          route="AddContact"
           icon={
             <Image
               source={require("@/shared/assets/images/interface/plus-white.png")}
@@ -48,7 +48,6 @@ const Contact = () => {
             height: 40,
           }}
         />
-        {add && <AddContact />}
       </ScrollView>
     </ScreenLayout>
   );
