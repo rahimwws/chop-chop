@@ -74,7 +74,7 @@ const ChooseToken = () => {
           textColor="white"
           styles={{ width: "48%" }}
           isRoute
-          route="Service"
+          route="Tabs"
           iconPlace="right"
           icon={
             <Image

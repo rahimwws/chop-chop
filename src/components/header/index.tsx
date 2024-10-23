@@ -3,6 +3,7 @@ import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import { useDisconnect } from "wagmi";
 
 const Header = ({
   title = "default",
@@ -12,6 +13,7 @@ const Header = ({
   type?: "stack" | "default";
 }) => {
   const navigation = useAppNavigation();
+  const { disconnect, status } = useDisconnect();
   return (
     <View
       style={{
@@ -66,15 +68,35 @@ const Header = ({
           />
         </View>
       ) : (
-        <Image
-          source={require("@/shared/assets/images/blue-logo.png")}
+        <View
           style={{
-            width: "40%",
-            marginTop: "-25%",
-            marginLeft: "-2%",
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
-          resizeMode="contain"
-        />
+        >
+          <Image
+            source={require("@/shared/assets/images/blue-logo.png")}
+            style={{
+              width: "40%",
+              marginTop: "-25%",
+              marginLeft: "-2%",
+            }}
+            resizeMode="contain"
+          />
+          {title === "Profile" && (
+            <TouchableOpacity
+              onPress={() => {
+                disconnect();
+                if (status === "success") navigation.navigate("Introduction");
+              }}
+              style={{ position: "absolute", top: 0, right: 0 }}
+            >
+              <Typography color="blue">Finish Demo</Typography>
+            </TouchableOpacity>
+          )}
+        </View>
       )}
       <Typography
         styles={{ marginTop: "-20%", lineHeight: 32 }}

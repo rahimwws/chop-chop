@@ -13,6 +13,7 @@ const Introduction = () => {
       screenOptions={{
         headerShown: false,
       }}
+      initialRouteName="Intro"
     >
       <Stack.Screen name="Intro" component={Intro} />
       <Stack.Screen name="ChooseChains" component={ChooseChains} />

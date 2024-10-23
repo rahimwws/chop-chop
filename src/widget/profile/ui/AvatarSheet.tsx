@@ -4,7 +4,13 @@ import Typography from "@/shared/ui/Typography";
 import { Sheet } from "@/shared/ui/Sheets";
 import Portal from "@/components/portal/Portal";
 import { AVATARS } from "@/shared/config/avatars";
-import { Image, ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ImageProps,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 
 const AvatarSheet = ({
@@ -12,7 +18,7 @@ const AvatarSheet = ({
   setImage,
 }: {
   bottomSheetRef: RefObject<BottomSheetMethods>;
-  setImage: (avatar: string) => void;
+  setImage: (avatar: ImageProps) => void;
 }) => {
   const snapPoints = useMemo(() => ["60%"], []);
 

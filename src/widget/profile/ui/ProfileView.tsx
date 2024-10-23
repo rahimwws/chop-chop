@@ -1,4 +1,4 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, ImageProps } from "react-native";
 import React, { useState } from "react";
 import Avatar from "@/shared/ui/Avatar";
 import { colors } from "@/shared/lib/theme";
@@ -12,7 +12,7 @@ const ProfileView = ({
   image,
 }: {
   openSheet: () => void;
-  image: string;
+  image: ImageProps;
 }) => {
   const username = useUserStore((store) => store.username);
   const setUsername = useUserStore((store) => store.setUsername);
