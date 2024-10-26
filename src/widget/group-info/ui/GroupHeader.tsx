@@ -1,17 +1,40 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React from "react";
 import { colors } from "@/shared/lib/theme";
 import { Group } from "@/entities/groups/lib/types";
 import Typography from "@/shared/ui/Typography";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { useAccount } from "wagmi";
-import { billToDebts, calcOweIsOwed } from "@/entities/groups/lib/store";
-
+import {
+  billToDebts,
+  calcOweIsOwed,
+  useGroupsStore,
+} from "@/entities/groups/lib/store";
+import Trash from "@/shared/assets/svg/icons/trash.svg";
+import { useAppNavigation } from "@/shared/lib/navigation";
 const GroupHeader = ({ group }: { group: Group }) => {
+  const navigation = useAppNavigation();
   const account = useAccount();
-
+  const groups = useGroupsStore((store) => store.groups);
+  const setGroups = useGroupsStore((store) => store.setGroups);
   const allDebts = group!.bills.flatMap((x) => billToDebts(x));
   const oweOwed = calcOweIsOwed(allDebts, account.address as any);
+  const handleDelete = () => {
+    if (allDebts.length === 0) {
+      Alert.alert("Delete Group?", "Are you sure that you want to delete?", [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          onPress: () => {
+            setGroups(groups.filter((g) => g.id !== group.id));
+            navigation.goBack();
+          },
+        },
+      ]);
+    } else {
+      Alert.alert("Error", "You have debts");
+    }
+  };
   return (
     <View
       style={{
@@ -71,6 +94,8 @@ const GroupHeader = ({ group }: { group: Group }) => {
           }}
           textColor="blue"
           bg={colors.middleGray}
+          icon={<Trash />}
+          action={handleDelete}
         />
       </View>
     </View>

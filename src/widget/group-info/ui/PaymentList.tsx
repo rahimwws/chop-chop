@@ -12,9 +12,11 @@ const PaymentList = ({ group }: { group: Group }) => {
         gap: 10,
       }}
     >
-      <Typography align="left" font="r-m">
-        September 2024
-      </Typography>
+      {group?.bills.length !== 0 && (
+        <Typography align="left" font="r-m">
+          September 2024
+        </Typography>
+      )}
       {group?.bills.map((b, index) => {
         const debts = group.bills.flatMap((x) => billToDebts(x));
         const oweOwed = calcOweIsOwed(debts, b.payerAddress);

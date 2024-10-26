@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import Header from "@/components/header";
-import { Balance, ContactList } from "@/widget/contacts";
+import Balance from "@/widget/contacts/ui/Balance";
+import ContactList from "@/widget/contacts/ui/ContactList";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { colors } from "@/shared/lib/theme";
-
 import { Image, ScrollView } from "react-native";
 
 const Contact = () => {
+  const [totalOwed, setTotalOwed] = useState<number>(0);
+
   return (
     <ScreenLayout pb={0}>
       <ScrollView
@@ -17,8 +19,8 @@ const Contact = () => {
         showsVerticalScrollIndicator={false}
       >
         <Header title="Contacts" />
-        <Balance />
-        <ContactList />
+        <Balance totalOwed={totalOwed} />
+        <ContactList setTotalOwed={setTotalOwed} />
         <LargeButton
           text="Add more friends"
           bg={colors.blue}

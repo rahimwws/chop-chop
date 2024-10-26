@@ -12,8 +12,9 @@ import { colors } from "@/shared/lib/theme";
 import CustomTabButton from "@/components/tabbar/CustomButton";
 import GroupStack from "./tabs/GroupStack";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Text, View } from "react-native";
 import ContactStack from "./tabs/ContactStack";
+import Typography from "@/shared/ui/Typography";
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
   const [route, setRoute] = useState<"contact" | "group">("group");
@@ -60,6 +61,18 @@ const Tabs = () => {
               />
             );
           },
+          tabBarLabel: ({ focused }) => (
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: focused ? colors.white : colors.blue,
+              }}
+            >
+              <Typography color="white" size={14} font="r-m">
+                Groups
+              </Typography>
+            </View>
+          ),
         }}
       />
       <Tab.Screen
@@ -82,6 +95,18 @@ const Tabs = () => {
               />
             );
           },
+          tabBarLabel: ({ focused }) => (
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: focused ? colors.white : colors.blue,
+              }}
+            >
+              <Typography color="white" size={14} font="r-m">
+                Contacts
+              </Typography>
+            </View>
+          ),
         }}
       />
       <Tab.Screen
@@ -90,9 +115,6 @@ const Tabs = () => {
         options={{
           title: "",
           tabBarShowLabel: false,
-          tabBarLabelStyle: {
-            height: 0,
-          },
           tabBarIcon: ({ color }) => {
             return <ButtonAddSvg color={color} width={70} />;
           },
@@ -116,6 +138,18 @@ const Tabs = () => {
           tabBarIcon: () => {
             return <HistorySVG width={26} height={26} />;
           },
+          tabBarLabel: ({ focused }) => (
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: focused ? colors.white : colors.blue,
+              }}
+            >
+              <Typography color="white" size={14} font="r-m">
+                History
+              </Typography>
+            </View>
+          ),
         }}
       />
       <Tab.Screen
@@ -125,6 +159,18 @@ const Tabs = () => {
           tabBarIcon: () => {
             return <AccountSVG width={26} height={26} />;
           },
+          tabBarLabel: ({ focused }) => (
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: focused ? colors.white : colors.blue,
+              }}
+            >
+              <Typography color="white" size={14} font="r-m">
+                Profile
+              </Typography>
+            </View>
+          ),
         }}
       />
     </Tab.Navigator>

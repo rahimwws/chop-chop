@@ -1,9 +1,9 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 
-const Balance = () => {
+const Balance = ({ totalOwed }: { totalOwed: number }) => {
   return (
     <View
       style={{
@@ -15,7 +15,7 @@ const Balance = () => {
       }}
     >
       <Typography size={24} color="blue" font="ar-r">
-        You are owed: 50 $
+        You are owed: {totalOwed} $
       </Typography>
     </View>
   );

@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React, { useMemo } from "react";
+import React, { Dispatch, SetStateAction, useMemo } from "react";
 import Card from "./Card";
 import { useContactsStore } from "@/entities/contacts/lib/store";
 import {
@@ -9,7 +9,11 @@ import {
 } from "@/entities/groups/lib/store";
 import { useUserStore } from "@/shared/lib/store/userStore";
 
-const ContactList = () => {
+const ContactList = ({
+  setTotalOwed,
+}: {
+  setTotalOwed: Dispatch<SetStateAction<number>>;
+}) => {
   const { contacts } = useContactsStore();
   const { groups } = useGroupsStore();
   const userAddress = useUserStore((store) => store.address);
@@ -27,6 +31,13 @@ const ContactList = () => {
       );
       return { ...contact, userOwe, userIsOwed };
     });
+
+    // Calculate total owed and set it
+    const totalOwed = contactsWithDebts.reduce(
+      (total, contact) => total + contact.userIsOwed,
+      0
+    );
+    setTotalOwed(totalOwed);
 
     return contactsWithDebts.sort((a, b) => a.name.localeCompare(b.name));
   }, [contacts, allDebts, userAddress]);

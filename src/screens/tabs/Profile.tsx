@@ -3,19 +3,16 @@ import ScreenLayout from "@/shared/ui/Layout";
 import Header from "@/components/header";
 import { AvatarSheet, ProfileTokens, ProfileView } from "@/widget/profile";
 import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet";
-import { useAccount } from "wagmi";
-import { ScrollView, Switch, View } from "react-native";
-import Typography from "@/shared/ui/Typography";
+import { ScrollView } from "react-native";
 import { colors } from "@/shared/lib/theme";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { useUserStore } from "@/shared/lib/store/userStore";
+import { NotificationSwitch } from "@/features/notification";
 
 const Profile = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const profileImage = useUserStore((store) => store.avatar);
   const setProfileImage = useUserStore((store) => store.setAvatar);
-  const [isEnabled, setIsEnabled] = useState<boolean>(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   return (
     <ScreenLayout>
       <ScrollView
@@ -35,7 +32,7 @@ const Profile = () => {
         />
         <ProfileTokens />
         <LargeButton
-          text="Manage Network Tokens"
+          text="manage networks & tokens"
           bg={colors.blue}
           textColor="white"
           styles={{
@@ -44,35 +41,9 @@ const Profile = () => {
             height: 40,
           }}
           isRoute
-          route="ChooseChains"
+          route="Introduction"
         />
-        <Typography
-          size={20}
-          font="r-m"
-          align="left"
-          styles={{
-            marginVertical: "3%",
-          }}
-        >
-          Application settings
-        </Typography>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography size={18}>Notification</Typography>
-          <Switch
-            trackColor={{ false: colors.middleGray, true: colors.blue }}
-            thumbColor={isEnabled ? colors.white : "#f4f3f4"}
-            ios_backgroundColor={colors.middleGray}
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-            style={{ transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }] }}
-          />
-        </View>
+        <NotificationSwitch />
       </ScrollView>
     </ScreenLayout>
   );

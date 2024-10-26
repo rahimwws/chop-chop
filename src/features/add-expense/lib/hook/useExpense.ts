@@ -56,7 +56,7 @@ export const useExpense = (
       setSum("");
       setPaidBy(null);
 
-      navigation.navigate("GroupDetail", { group });
+      navigation.navigate("Groups");
     } else {
       Alert.alert("Error", result.message);
     }

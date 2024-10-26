@@ -11,8 +11,6 @@ export const CustomTabButton = ({
   children: React.ReactNode;
   onPress: () => void;
 }) => {
-  const navigation = useAppNavigation();
-
   return (
     <TouchableOpacity
       style={{
@@ -23,7 +21,6 @@ export const CustomTabButton = ({
       onPress={() => {
         LightHeptic();
         onPress();
-        // navigation.navigate("CreateGroup");
       }}
       activeOpacity={0.8}
     >
