@@ -17,10 +17,10 @@ const GroupHeader = ({ group }: { group: Group }) => {
   const account = useAccount();
   const groups = useGroupsStore((store) => store.groups);
   const setGroups = useGroupsStore((store) => store.setGroups);
-  const allDebts = group!.bills.flatMap((x) => billToDebts(x));
-  const oweOwed = calcOweIsOwed(allDebts, account.address as any);
+  const allBills = group!.bills;
+  const oweOwed = calcOweIsOwed(allBills, account.address as any);
   const handleDelete = () => {
-    if (allDebts.length === 0) {
+    if (allBills.length === 0) {
       Alert.alert("Delete Group?", "Are you sure that you want to delete?", [
         { text: "Cancel", style: "cancel" },
         {
@@ -56,10 +56,10 @@ const GroupHeader = ({ group }: { group: Group }) => {
           marginVertical: 3,
         }}
       >
-        You are owed: {oweOwed.userOwe}$
+        You are owed: {oweOwed.userIsOwed}$
       </Typography>
       <Typography size={18} font="r-r">
-        You owe: {oweOwed.userIsOwed}$
+        You owe: {oweOwed.userOwe}$
       </Typography>
       <View
         style={{

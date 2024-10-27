@@ -69,10 +69,21 @@ export default function PaymentCard({
         </Typography>
       </View>
 
-      <Typography color="red">You owe</Typography>
-      <Typography color="red">
-        {userOwe} {bill.currency}
-      </Typography>
+      {userOwe > 0 ? (
+        <>
+          <Typography color="red">You owe</Typography>
+          <Typography color="red">
+            {userOwe} {bill.currency}
+          </Typography>
+        </>
+      ) : (
+        <>
+          <Typography color="green">You are owed</Typography>
+          <Typography color="green">
+            {-userOwe} {bill.currency}
+          </Typography>
+        </>
+      )}
     </TouchableOpacity>
   );
 }

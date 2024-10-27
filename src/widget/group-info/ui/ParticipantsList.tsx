@@ -22,8 +22,8 @@ const ParticipantsList = ({
       }}
     >
       {group?.participants.map((item, index) => {
-        const debts = group.bills.flatMap((x) => billToDebts(x));
-        const oweOwed = calcOweIsOwed(debts, item);
+        const bills = group.bills;
+        const oweOwed = calcOweIsOwed(bills, item);
         const avatar = index > 15 ? 1 : index;
         return (
           <ParticipantCard

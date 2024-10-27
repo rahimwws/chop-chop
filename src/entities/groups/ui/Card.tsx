@@ -15,14 +15,14 @@ import Trash from "@/shared/assets/svg/icons/trash.svg";
 export default function Card({
   id,
   groupName,
-  owned,
+  isOwed,
   owe,
   image,
   isSettled,
 }: {
   id: string;
   groupName: string;
-  owned: number;
+  isOwed: number;
   owe: number;
   image?: string;
   isSettled: boolean;
@@ -105,7 +105,7 @@ export default function Card({
               You are owed:
             </Typography>
             <Typography size={14} color="green">
-              {owned}$
+              {isOwed}$
             </Typography>
           </View>
         )}

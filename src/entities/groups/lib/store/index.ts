@@ -13,34 +13,49 @@ export function billToDebts(bill: Bill) {
   return debts;
 }
 
-export function calcOweIsOwed(debts: Debt[], userAddress: string) {
+export function calcOweIsOwed(bills: Bill[], userAddress: string) {
+  let oweIsOwed = {
+    userOwe: 0,
+    userIsOwed: 0,
+  };
+  for (const bill of bills) {
+    const userOwe = calcUserOwe(bill, userAddress);
+    if (userOwe > 0) oweIsOwed.userOwe += userOwe;
+    else oweIsOwed.userIsOwed += -userOwe;
+  }
+  return oweIsOwed;
+}
+
+export function calcUserOwe(bill: Bill, userAddress: string) {
+  const debts = billToDebts(bill);
   const userOwe = debts
-    .filter((x) => x.to == userAddress)
-    .map((x) => x.debt)
-    .reduce((x, y) => x + y, 0);
-  const userIsOwed = debts
     .filter((x) => x.from == userAddress)
     .map((x) => x.debt)
     .reduce((x, y) => x + y, 0);
-
-  return { userOwe, userIsOwed };
-}
-export function calcOweIsOwedContact(
-  debts: Debt[],
-  userAddress: string,
-  contactAddress: string
-) {
-  const userOwe = debts
-    .filter((x) => x.to == userAddress && x.from == contactAddress)
+  const userIsOwed = debts
+    .filter((x) => x.to == userAddress)
     .map((x) => x.debt)
     .reduce((x, y) => x + y, 0);
 
-  const userIsOwed = debts
+  return userOwe - userIsOwed;
+}
+export function calcContractOwe(
+  bill: Bill,
+  userAddress: string,
+  contactAddress: string
+) {
+  const debts = billToDebts(bill);
+  const userOwe = debts
     .filter((x) => x.from == userAddress && x.to == contactAddress)
     .map((x) => x.debt)
     .reduce((x, y) => x + y, 0);
 
-  return { userOwe, userIsOwed };
+  const userIsOwed = debts
+    .filter((x) => x.to == userAddress && x.from == contactAddress)
+    .map((x) => x.debt)
+    .reduce((x, y) => x + y, 0);
+
+  return userOwe - userIsOwed;
 }
 
 export const useGroupsStore = create<
