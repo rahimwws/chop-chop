@@ -4,7 +4,7 @@ import Card from "./Card";
 import { useContactsStore } from "@/entities/contacts/lib/store";
 import {
   billToDebts,
-  calcOweIsOwedContact,
+  calcContactOweIsOwed,
   useGroupsStore,
 } from "@/entities/groups/lib/store";
 import { useUserStore } from "@/shared/lib/store/userStore";
@@ -18,14 +18,14 @@ const ContactList = ({
   const { groups } = useGroupsStore();
   const userAddress = useUserStore((store) => store.address);
 
-  const allDebts = groups.flatMap((group) =>
-    group.bills.flatMap((bill) => billToDebts(bill))
+  const allBills = groups.flatMap((group) =>
+    group.bills
   );
 
   const sortedContactsWithDebts = useMemo(() => {
     const contactsWithDebts = contacts.map((contact) => {
-      const { userOwe, userIsOwed } = calcOweIsOwedContact(
-        allDebts,
+      const { userOwe, userIsOwed } = calcContactOweIsOwed(
+        allBills,
         userAddress,
         contact.address
       );
@@ -40,7 +40,7 @@ const ContactList = ({
     setTotalOwed(totalOwed);
 
     return contactsWithDebts.sort((a, b) => a.name.localeCompare(b.name));
-  }, [contacts, allDebts, userAddress]);
+  }, [contacts, allBills, userAddress]);
 
   return (
     <View

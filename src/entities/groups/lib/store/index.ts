@@ -26,6 +26,19 @@ export function calcOweIsOwed(bills: Bill[], userAddress: string) {
   return oweIsOwed;
 }
 
+export function calcContactOweIsOwed(bills: Bill[], userAddress: string, contactAddress: string) {
+  let oweIsOwed = {
+    userOwe: 0,
+    userIsOwed: 0,
+  };
+  for (const bill of bills) {
+    const userOwe = calcContractOwe(bill, userAddress, contactAddress);
+    if (userOwe > 0) oweIsOwed.userOwe += userOwe;
+    else oweIsOwed.userIsOwed += -userOwe;
+  }
+  return oweIsOwed;
+}
+
 export function calcUserOwe(bill: Bill, userAddress: string) {
   const debts = billToDebts(bill);
   const userOwe = debts
