@@ -40,6 +40,7 @@ export const useAddContact = () => {
     }
 
     const contactAddress = ensAddress || address;
+    console.log(ensAddress);
 
     if (
       contacts.some(
@@ -58,7 +59,7 @@ export const useAddContact = () => {
       avatarUrl: avatarUrl,
     });
     setAddress("");
-    navigation.navigate("Contact");
+    navigation.navigate("Contacts");
   };
 
   return {

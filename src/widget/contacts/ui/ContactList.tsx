@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { useEffect } from "react";
 import React, { Dispatch, SetStateAction, useMemo } from "react";
 import Card from "./Card";
 import { useContactsStore } from "@/entities/contacts/lib/store";
@@ -8,6 +8,7 @@ import {
   useGroupsStore,
 } from "@/entities/groups/lib/store";
 import { useUserStore } from "@/shared/lib/store/userStore";
+import { View } from "react-native";
 
 const ContactList = ({
   setTotalOwed,
@@ -18,9 +19,7 @@ const ContactList = ({
   const { groups } = useGroupsStore();
   const userAddress = useUserStore((store) => store.address);
 
-  const allBills = groups.flatMap((group) =>
-    group.bills
-  );
+  const allBills = groups.flatMap((group) => group.bills);
 
   const sortedContactsWithDebts = useMemo(() => {
     const contactsWithDebts = contacts.map((contact) => {
@@ -32,15 +31,16 @@ const ContactList = ({
       return { ...contact, userOwe, userIsOwed };
     });
 
-    // Calculate total owed and set it
-    const totalOwed = contactsWithDebts.reduce(
+    return contactsWithDebts.sort((a, b) => a.name.localeCompare(b.name));
+  }, [contacts, allBills, userAddress]);
+
+  useEffect(() => {
+    const totalOwed = sortedContactsWithDebts.reduce(
       (total, contact) => total + contact.userIsOwed,
       0
     );
     setTotalOwed(totalOwed);
-
-    return contactsWithDebts.sort((a, b) => a.name.localeCompare(b.name));
-  }, [contacts, allBills, userAddress]);
+  }, [sortedContactsWithDebts, setTotalOwed]);
 
   return (
     <View

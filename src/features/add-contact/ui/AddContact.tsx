@@ -1,4 +1,4 @@
-import { View, TextInput } from "react-native";
+import { View, TextInput, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
 import { colors } from "@/shared/lib/theme";
 import LargeButton from "@/shared/ui/Button/LargeButton";
@@ -17,6 +17,15 @@ const AddContact = () => {
 
   const avatarSource = AVATARS[avatarIndex].src;
 
+  const handleSubmit = () => {
+    if (!address && !name) {
+      Alert.alert("Error", "Please enter a wallet address or name");
+      return;
+    }
+
+    handleAddContact(name, avatarSource);
+  };
+
   return (
     <View
       style={{
@@ -34,7 +43,6 @@ const AddContact = () => {
           borderRadius: 5,
           fontFamily: "r-r",
           fontSize: 16,
-          marginBottom: 10,
         }}
         placeholderTextColor={colors.lightBlue}
         value={name}
@@ -50,7 +58,7 @@ const AddContact = () => {
           borderRadius: 5,
           fontFamily: "r-r",
           fontSize: 16,
-          marginBottom: 20,
+          marginVertical: 10,
         }}
         placeholderTextColor={colors.lightBlue}
         value={address}
@@ -64,8 +72,8 @@ const AddContact = () => {
           marginBottom: 10,
           height: 40,
         }}
-        action={() => handleAddContact(name, avatarSource)}
-        disabled={isLoading || !name || !address}
+        action={handleSubmit}
+        disabled={isLoading || (!address && !name)}
       />
     </View>
   );
