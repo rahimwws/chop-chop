@@ -3,35 +3,39 @@ import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import { Bill } from "@/entities/groups/lib/types";
-import { useContactsStore } from "@/entities/contacts/lib/store";
-import { useUserStore } from "@/shared/lib/store/userStore";
+import { getPersonInfo } from "@/entities/contacts/lib/config";
+
+const VerticalLine = ({ height }: { height: number }) => (
+  <View
+    style={{
+      position: "absolute",
+      left: 25,
+      top: 25,
+      width: 2,
+      height: height,
+      backgroundColor: colors.blue,
+    }}
+  />
+);
+
+const HorizontalLine = () => (
+  <View
+    style={{
+      position: "absolute",
+      left: -25,
+      top: 25,
+      width: 30,
+      height: 2,
+      backgroundColor: colors.blue,
+    }}
+  />
+);
 
 const PurchasePeople = ({ bill }: { bill: Bill }) => {
-  const contacts = useContactsStore((store) => store.contacts);
-  const username = useUserStore((store) => store.username);
-  const avatar = useUserStore((store) => store.avatar);
-  const userAddress = useUserStore((store) => store.address);
-
-  const getPersonInfo = (address: string) => {
-    const contact = contacts.find((c) => c.address === address);
-    if (contact) {
-      return {
-        name: contact.name,
-        avatar: contact.avatarUrl,
-      };
-    }
-    if (address === userAddress) {
-      return {
-        name: username,
-        avatar: avatar,
-      };
-    }
-    return {
-      name: address,
-      avatar: null,
-    };
-  };
-
+  const sortedAddresses = [...bill.spenersAddresses].sort((a) =>
+    a === bill.payerAddress ? -1 : 1
+  );
+  const lineHeight = 70 * (sortedAddresses.length - 1); // 80 - примерное расстояние между элементами
   return (
     <View
       style={{
@@ -40,20 +44,30 @@ const PurchasePeople = ({ bill }: { bill: Bill }) => {
         backgroundColor: colors.lightGray,
         padding: 10,
         borderRadius: 5,
-        gap: 10,
+        position: "relative",
       }}
     >
-      {bill.spenersAddresses.map((address, index) => {
+      <VerticalLine height={lineHeight} />
+
+      {sortedAddresses.map((address, index) => {
         const price = bill.spentAmounts[index];
         const { name, avatar } = getPersonInfo(address);
+        const isPayed = address === bill.payerAddress;
+        const isOwed = !isPayed;
+
         return (
           <View
             style={{
               flexDirection: "row",
               gap: 10,
+              marginLeft: isOwed ? 40 : 0,
+              position: "relative",
+              marginVertical: 5,
             }}
             key={index}
           >
+            {isOwed && <HorizontalLine />}
+
             {avatar ? (
               <Image
                 source={avatar}
@@ -87,8 +101,8 @@ const PurchasePeople = ({ bill }: { bill: Bill }) => {
               <Typography font="r-m" size={18}>
                 {name}
               </Typography>
-              <Typography font="r-m">
-                <Typography color="blue">Paid:</Typography> {price}$
+              <Typography font="r-m" color={isOwed ? "red" : "blue"}>
+                {isOwed ? `Owes: ${price}$` : `Paid: ${bill.sum}$`}
               </Typography>
             </View>
           </View>
