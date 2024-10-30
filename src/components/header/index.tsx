@@ -3,17 +3,20 @@ import React from "react";
 import Typography from "@/shared/ui/Typography";
 import { colors } from "@/shared/lib/theme";
 import { useAppNavigation } from "@/shared/lib/navigation";
-import { useDisconnect } from "wagmi";
+import { useAccount } from "wagmi";
+import { ModalController } from "@reown/appkit-core-react-native";
 
 const Header = ({
   title = "default",
   type,
+  showDemo = false,
 }: {
   title: string;
   type?: "stack" | "default";
+  showDemo?: boolean;
 }) => {
   const navigation = useAppNavigation();
-  const { disconnect, status } = useDisconnect();
+  const { address, chain } = useAccount();
   return (
     <View
       style={{
@@ -85,15 +88,30 @@ const Header = ({
             }}
             resizeMode="contain"
           />
-          {title === "Profile" && (
+          {showDemo && (
             <TouchableOpacity
-              onPress={() => {
-                disconnect();
-                if (status === "success") navigation.navigate("Introduction");
+              onPress={() => ModalController.open()}
+              style={{
+                position: "absolute",
+                top: "15%",
+                right: 0,
+                borderWidth: 1,
+                borderColor: colors.blue,
+                borderRadius: 50,
+                height: 40,
+                paddingHorizontal: 10,
+                alignItems: "center",
+                justifyContent: "center",
               }}
-              style={{ position: "absolute", top: 0, right: 0 }}
             >
-              <Typography color="blue">Finish Demo</Typography>
+              <Typography color="blue">
+                {address
+                  ? chain?.name.slice(0, 3) +
+                    ": " +
+                    address.slice(0, 10) +
+                    "..."
+                  : "Connect Wallet"}
+              </Typography>
             </TouchableOpacity>
           )}
         </View>

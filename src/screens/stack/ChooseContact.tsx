@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ScreenLayout from "@/shared/ui/Layout";
 import Header from "@/components/header";
 import { ContactField } from "@/features/create-group";
@@ -10,6 +10,9 @@ import { Group } from "@/entities/groups/lib/types";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useGroupsStore } from "@/entities/groups/lib/store";
 import { useAppNavigation } from "@/shared/lib/navigation";
+import QRCode from "react-native-qrcode-svg";
+import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet";
+import { QrSheet } from "@/features/create-qr";
 
 type RouteParams = {
   ChooseContact: {
@@ -21,14 +24,17 @@ type routeT = RouteProp<RouteParams, "ChooseContact">;
 
 const ChooseContact = () => {
   const navigation = useAppNavigation();
-  const [mode, setMode] = useState<"member" | "contact">("member");
   const { params } = useRoute<routeT>();
+
+  const [mode, setMode] = useState<"member" | "contact">("member");
   const [participants, setParticipants] = useState<string[]>([]);
+  const [share, setShare] = useState<boolean>(false);
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
   const store = useGroupsStore();
 
   if (!params.group) return null;
   const saveGroupWithNewParticipants = () => {
-    console.log(participants);
     const updatedGroup = {
       ...params.group,
       participants: [...participants],
@@ -41,7 +47,6 @@ const ChooseContact = () => {
 
     navigation.navigate("GroupDetail", { group: updatedGroup });
   };
-
   return (
     <ScreenLayout>
       <Header title="Add members " />
@@ -75,9 +80,13 @@ const ChooseContact = () => {
           styles={{ width: "48%", height: 40 }}
           text="Share a link"
           textStyle={{ fontSize: 18 }}
-          textColor="blue"
-          bg={colors.middleGray}
-          action={() => {}}
+          textColor={"blue"}
+          bg={share ? colors.white : colors.middleGray}
+          theme={share ? "outline" : "default"}
+          action={() => {
+            bottomSheetRef.current?.expand();
+            setShare(true);
+          }}
           icon={
             <Image
               source={require("@/shared/assets/images/interface/share-link.png")}
@@ -105,6 +114,11 @@ const ChooseContact = () => {
           action={saveGroupWithNewParticipants}
         />
       )}
+      <QrSheet
+        bottomSheetRef={bottomSheetRef}
+        id={params.group.id}
+        close={() => setShare(false)}
+      />
     </ScreenLayout>
   );
 };

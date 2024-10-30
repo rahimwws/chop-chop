@@ -1,11 +1,12 @@
 import { View, Text } from "react-native";
-import React, { useEffect } from "react";
-import { billToDebts, calcOweIsOwed, calcUserOwe, useGroupsStore } from "../lib/store";
+import { calcOweIsOwed, useGroupsStore } from "../lib/store";
 import Card from "./Card";
 import { useAccount } from "wagmi";
+import { useConfirmationStore } from "@/shared/lib/store/сonfirmationStore";
 
 const List = () => {
-  const groupsStore = useGroupsStore();
+  const groupsStore = useGroupsStore((store) => store.groups);
+  const confirmationStore = useConfirmationStore((store) => store.groups);
   const { address } = useAccount();
   return (
     <View
@@ -14,7 +15,7 @@ const List = () => {
         gap: 10,
       }}
     >
-      {groupsStore.groups.map((item, index) => {
+      {groupsStore.map((item, index) => {
         const oweOwed = calcOweIsOwed(item.bills, address!);
         return (
           <Card
@@ -25,6 +26,14 @@ const List = () => {
             isOwed={oweOwed.userIsOwed}
             isSettled={oweOwed.userOwe == 0 && oweOwed.userIsOwed == 0}
             image={item.image}
+            confirmation={
+              !!confirmationStore.find((group) => group.groupId === item.id)
+            }
+            participants={item.participants.length}
+            owner={
+              confirmationStore.find((group) => group.groupId === item.id)
+                ?.contactAddress
+            }
           />
         );
       })}

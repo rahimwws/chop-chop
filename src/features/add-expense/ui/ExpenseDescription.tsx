@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { View, TextInput, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from "react-native";
 import { colors } from "@/shared/lib/theme";
 import ExpenseCard from "./ExpenseCard";
 import { Group } from "@/entities/groups/lib/types";
@@ -125,7 +131,7 @@ const ExpenseDescription = ({
           Paid by
         </Typography>
 
-        <View style={{ marginTop: "2%", gap: 10 }}>
+        <ScrollView contentContainerStyle={{ marginTop: "2%", gap: 10 }}>
           {group &&
             group.participants
               .filter((token) => token !== userToken)
@@ -153,7 +159,7 @@ const ExpenseDescription = ({
             selected={paidBy === userToken}
             setPaidBy={setPaidBy}
           />
-        </View>
+        </ScrollView>
       </View>
 
       <LargeButton

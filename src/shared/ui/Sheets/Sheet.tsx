@@ -7,10 +7,11 @@ import { colors } from "@/shared/lib/theme";
 interface SheetProps extends Omit<BottomSheetProps, "snapPoints"> {
   children: React.ReactNode;
   customSnapPoints?: string[] | false;
+  bg?: string;
 }
 
 const Sheet = forwardRef<BottomSheet, SheetProps>(
-  ({ children, customSnapPoints = false, ...props }, ref) => {
+  ({ children, customSnapPoints = false, bg = colors.blue, ...props }, ref) => {
     const snapPointsCustom = ["40%"];
 
     return (
@@ -18,10 +19,10 @@ const Sheet = forwardRef<BottomSheet, SheetProps>(
         ref={ref}
         snapPoints={customSnapPoints ? customSnapPoints : snapPointsCustom}
         enableHandlePanningGesture={true}
-        handleIndicatorStyle={{ backgroundColor: colors.blue, width: 50 }}
+        handleIndicatorStyle={{ backgroundColor: bg ?? colors.blue, width: 50 }}
         enableContentPanningGesture={true}
         backgroundStyle={{
-          backgroundColor: colors.blue,
+          backgroundColor: bg ?? colors.blue,
           borderRadius: 40,
         }}
         index={-1}
@@ -31,7 +32,7 @@ const Sheet = forwardRef<BottomSheet, SheetProps>(
           style={{
             flex: 1,
             paddingHorizontal: 10,
-            backgroundColor: colors.blue,
+            backgroundColor: bg ?? colors.blue,
             borderRadius: 40,
           }}
         >

@@ -21,6 +21,14 @@
         "backgroundColor": "#2F28D0"
       },
       "package": "com.rahimwws77.chopchop"
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
+        }
+      ]
+    ]
   }
 }

@@ -8,8 +8,8 @@ import { colors } from "@/shared/lib/theme";
 const Groups = () => {
   return (
     <ScreenLayout>
-      <ScrollView style={{ flex: 1 }}>
-        <Header title="Groups" />
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+        <Header title="Groups" showDemo />
         <ListGroup />
         <LargeButton
           text="Create a Group"

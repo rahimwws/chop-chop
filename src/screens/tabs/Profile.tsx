@@ -21,7 +21,7 @@ const Profile = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Header title="Profile" />
+        <Header title="Profile" showDemo />
         <ProfileView
           openSheet={() => bottomSheetRef.current?.collapse()}
           image={profileImage}
