@@ -11,7 +11,7 @@ SplashScreen.preventAutoHideAsync();
 const Index = () => {
   const Stack = createStackNavigator();
   const address = useUserStore((store) => store.address);
-  const initialRoute = address ? "Tabs" : "Tabs";
+  const initialRoute = address ? "Tabs" : "Introduction";
   const [loaded] = useFonts({
     "ar-r": require("../../assets/fonts/Arame.ttf"),
     "ar-b": require("../../assets/fonts/Arame-Bold.ttf"),
@@ -35,9 +35,10 @@ const Index = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={"Camera"}
+      initialRouteName={initialRoute}
     >
-      <Stack.Screen component={Camera} name="Camera" />
+      <Stack.Screen component={Introduction} name="Introduction" />
+      <Stack.Screen component={Tabs} name="Tabs" />
     </Stack.Navigator>
   );
 };
