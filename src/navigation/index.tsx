@@ -5,12 +5,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Introduction from "./Introduction";
 import { useUserStore } from "@/shared/lib/store/userStore";
 import Tabs from "./Tabs";
+import { Camera } from "@/screens/stack/Camera";
 
 SplashScreen.preventAutoHideAsync();
 const Index = () => {
   const Stack = createStackNavigator();
   const address = useUserStore((store) => store.address);
-  const initialRoute = address ? "Tabs" : "Introduction";
+  const initialRoute = address ? "Tabs" : "Tabs";
   const [loaded] = useFonts({
     "ar-r": require("../../assets/fonts/Arame.ttf"),
     "ar-b": require("../../assets/fonts/Arame-Bold.ttf"),
@@ -34,10 +35,9 @@ const Index = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={initialRoute}
+      initialRouteName={"Camera"}
     >
-      <Stack.Screen name="Introduction" component={Introduction} />
-      <Stack.Screen name="Tabs" component={Tabs} />
+      <Stack.Screen component={Camera} name="Camera" />
     </Stack.Navigator>
   );
 };

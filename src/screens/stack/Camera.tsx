@@ -1,16 +1,33 @@
+import { useAddContact } from "@/features/add-contact/hooks/useAddContact";
+import { useAppNavigation } from "@/shared/lib/navigation";
+import { colors } from "@/shared/lib/theme";
+import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
-import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
-import { useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  BarcodeScanningResult,
+  CameraView,
+  useCameraPermissions,
+} from "expo-camera";
+import { Button, StyleSheet, View } from "react-native";
 
 export const Camera = () => {
-  const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
-
+  const { setAddress } = useAddContact();
+  const navigation = useAppNavigation();
   if (!permission) {
     return <View />;
   }
+  const handleBarCodeScanned = (scanningResult: BarcodeScanningResult) => {
+    console.log(scanningResult.data);
 
+    const address = scanningResult.data.split(":").pop()?.split("@")[0]; // Убираем все до ':' и '@'
+
+    console.log(address);
+    if (address) {
+      // setAddress(address)
+      navigation.goBack();
+    }
+  };
   if (!permission.granted) {
     return (
       <View style={styles.container}>
@@ -20,21 +37,17 @@ export const Camera = () => {
     );
   }
 
-  function toggleCameraFacing() {
-    setFacing((current) => (current === "back" ? "front" : "back"));
-  }
-
   return (
-    <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={toggleCameraFacing}
-          ></TouchableOpacity>
-        </View>
-      </CameraView>
-    </View>
+    <ScreenLayout showPx={false} pt={0} pb={0}>
+      <CameraView
+        style={styles.camera}
+        facing="back"
+        barcodeScannerSettings={{
+          barcodeTypes: ["qr"],
+        }}
+        onBarcodeScanned={handleBarCodeScanned}
+      ></CameraView>
+    </ScreenLayout>
   );
 };
 
@@ -42,6 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: colors.white,
   },
   camera: {
     flex: 1,

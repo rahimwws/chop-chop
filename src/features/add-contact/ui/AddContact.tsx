@@ -10,8 +10,8 @@ import { useAppNavigation } from "@/shared/lib/navigation";
 const AddContact = () => {
   const { address, setAddress, handleAddContact, isLoading } = useAddContact();
   const navigation = useAppNavigation();
-  const [name, setName] = useState("");
-  const [avatarIndex, setAvatarIndex] = useState(0);
+  const [name, setName] = useState<string>("");
+  const [avatarIndex, setAvatarIndex] = useState<number>(0);
 
   useEffect(() => {
     setAvatarIndex(Math.floor(Math.random() * AVATARS.length));
