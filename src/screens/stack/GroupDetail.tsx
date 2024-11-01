@@ -46,7 +46,7 @@ const GroupDetail = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Header title="" type="stack" />
+        <Header title="" type="stack" showDemo />
         <GroupHeader group={params.group} />
         <TopTab
           mode={mode}

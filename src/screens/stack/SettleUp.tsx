@@ -8,7 +8,7 @@ import Typography from "@/shared/ui/Typography";
 const SettleUp = () => {
   return (
     <ScreenLayout>
-      <Header title="Settle Up" />
+      <Header title="Settle Up" showDemo />
       <View
         style={{
           padding: 10,

@@ -49,7 +49,7 @@ const ChooseContact = () => {
   };
   return (
     <ScreenLayout>
-      <Header title="Add members " />
+      <Header title="Add members" showDemo />
       <ContactField group={params.group} />
       <View
         style={{

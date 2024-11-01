@@ -5,7 +5,7 @@ import { AddContactService } from "@/features/add-contact";
 const AddContact = () => {
   return (
     <ScreenLayout>
-      <Header type="default" title="Add new contact" />
+      <Header type="default" title="Add new contact" showDemo />
       <AddContactService />
     </ScreenLayout>
   );

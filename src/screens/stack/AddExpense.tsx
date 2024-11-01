@@ -34,6 +34,7 @@ const AddExpense = () => {
             ? "Add Personal Expense"
             : "Add Group Expense"
         }
+        showDemo
       />
       <ExpenseName
         type={params.type}

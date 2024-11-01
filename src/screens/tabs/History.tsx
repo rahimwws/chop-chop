@@ -13,7 +13,7 @@ const History = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Header title="History" />
+        <Header title="History" showDemo />
         <HistoryList />
       </ScrollView>
     </ScreenLayout>
