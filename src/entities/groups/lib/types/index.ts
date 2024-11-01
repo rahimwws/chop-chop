@@ -22,7 +22,7 @@ export interface Debt {
   debt: number;
 }
 
-export interface UserSelectionsStore {
+export interface UserGroupsStore {
   groups: Group[];
   setGroups: (groups: Group[]) => void;
 }

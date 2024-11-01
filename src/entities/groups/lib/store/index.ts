@@ -1,7 +1,7 @@
 import { storage } from "@/shared/lib/storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { Bill, Debt, UserSelectionsStore, Group } from "../types";
+import { Bill, Debt, UserGroupsStore, Group } from "../types";
 
 export function billToDebts(bill: Bill) {
   const debts = bill.spentAmounts.map((x, i) => ({
@@ -72,7 +72,7 @@ export function calcContractOwe(
 }
 
 export const useGroupsStore = create<
-  UserSelectionsStore,
+UserGroupsStore,
   [["zustand/persist", never]]
 >(
   persist(
@@ -85,7 +85,7 @@ export const useGroupsStore = create<
       },
     }),
     {
-      name: "selectionsStore",
+      name: "groupsStore",
       storage: createJSONStorage(() => storage),
     }
   )
