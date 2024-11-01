@@ -5,7 +5,6 @@ import { colors } from "@/shared/lib/theme";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { useAccount } from "wagmi";
 import { ModalController } from "@reown/appkit-core-react-native";
-
 const Header = ({
   title = "default",
   type,
@@ -17,6 +16,8 @@ const Header = ({
 }) => {
   const navigation = useAppNavigation();
   const { address, chain } = useAccount();
+  // console.log(address);
+
   return (
     <View
       style={{
@@ -106,10 +107,9 @@ const Header = ({
             >
               <Typography color="blue">
                 {address
-                  ? chain?.name.slice(0, 3) +
+                  ? chain?.name.slice(0, 3).toUpperCase() +
                     ": " +
-                    address.slice(0, 10) +
-                    "..."
+                    `${address.slice(0, 6)}...${address.slice(-4)}`
                   : "Connect Wallet"}
               </Typography>
             </TouchableOpacity>

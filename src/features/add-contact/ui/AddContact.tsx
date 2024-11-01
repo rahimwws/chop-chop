@@ -7,7 +7,7 @@ import { AVATARS } from "@/shared/config/avatars";
 import QRCode from "@/shared/assets/svg/icons/qr.svg";
 import { useAppNavigation } from "@/shared/lib/navigation";
 
-const AddContact = () => {
+const AddContact = ({ QrAddress }: { QrAddress: undefined | string }) => {
   const { address, setAddress, handleAddContact, isLoading } = useAddContact();
   const navigation = useAppNavigation();
   const [name, setName] = useState<string>("");
@@ -15,7 +15,8 @@ const AddContact = () => {
 
   useEffect(() => {
     setAvatarIndex(Math.floor(Math.random() * AVATARS.length));
-  }, []);
+    if (QrAddress) setAddress(QrAddress);
+  }, [QrAddress]);
 
   const avatarSource = AVATARS[avatarIndex].src;
 

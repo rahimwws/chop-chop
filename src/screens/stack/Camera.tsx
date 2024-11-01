@@ -1,6 +1,7 @@
 import { useAddContact } from "@/features/add-contact/hooks/useAddContact";
 import { useAppNavigation } from "@/shared/lib/navigation";
 import { colors } from "@/shared/lib/theme";
+import { QrOverlay } from "@/shared/ui/Animation";
 import ScreenLayout from "@/shared/ui/Layout";
 import Typography from "@/shared/ui/Typography";
 import {
@@ -12,7 +13,6 @@ import { Button, StyleSheet, View } from "react-native";
 
 export const Camera = () => {
   const [permission, requestPermission] = useCameraPermissions();
-  const { setAddress } = useAddContact();
   const navigation = useAppNavigation();
   if (!permission) {
     return <View />;
@@ -20,12 +20,10 @@ export const Camera = () => {
   const handleBarCodeScanned = (scanningResult: BarcodeScanningResult) => {
     console.log(scanningResult.data);
 
-    const address = scanningResult.data.split(":").pop()?.split("@")[0]; // Убираем все до ':' и '@'
+    const address = scanningResult.data.split(":").pop()?.split("@")[0];
 
-    console.log(address);
     if (address) {
-      // setAddress(address)
-      navigation.goBack();
+      navigation.navigate("AddContact", { address });
     }
   };
   if (!permission.granted) {
@@ -46,7 +44,9 @@ export const Camera = () => {
           barcodeTypes: ["qr"],
         }}
         onBarcodeScanned={handleBarCodeScanned}
-      ></CameraView>
+      >
+        <QrOverlay />
+      </CameraView>
     </ScreenLayout>
   );
 };

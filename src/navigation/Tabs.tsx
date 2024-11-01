@@ -116,7 +116,7 @@ const Tabs = () => {
           title: "",
           tabBarShowLabel: false,
           tabBarIcon: ({ color }) => {
-            return <ButtonAddSvg color={color} width={70} />;
+            return <ButtonAddSvg color={color} width={65} />;
           },
           tabBarButton: (props) => {
             const handlePress = () => {

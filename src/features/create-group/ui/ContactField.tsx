@@ -1,8 +1,6 @@
 import { View, Text } from "react-native";
-import React from "react";
 import Avatar from "@/shared/ui/Avatar";
 import Typography from "@/shared/ui/Typography";
-import { RouteProp, useRoute } from "@react-navigation/native";
 import { Group } from "@/entities/groups/lib/types";
 
 const ContactField = ({ group }: { group: Group }) => {

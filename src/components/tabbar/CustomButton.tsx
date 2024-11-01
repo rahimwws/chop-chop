@@ -26,8 +26,8 @@ export const CustomTabButton = ({
     >
       <View
         style={{
-          width: 80,
-          height: 80,
+          width: 78,
+          height: 78,
           borderRadius: 45,
           backgroundColor: colors.white,
           alignItems: "center",

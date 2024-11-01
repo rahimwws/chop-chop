@@ -12,10 +12,6 @@ const ContactList = ({
 }) => {
   const { contacts } = useContactsStore();
 
-  // Фильтруем контакты, которых нет в списке участников
-  const availableContacts = contacts.filter(
-    (contact) => !participants.includes(contact.address)
-  );
   console.log("render");
 
   return (
@@ -26,42 +22,29 @@ const ContactList = ({
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ gap: 10 }}
     >
-      {participants.map((participant, index) => {
-        const participantContact = contacts.find(
-          (contact) => contact.address === participant
-        );
+      {contacts.map((contact, index) => {
+        const isSelected = participants.includes(contact.address);
 
         return (
           <Card
             key={index}
-            text={participantContact?.name || participant}
-            isSelected={true}
+            text={contact.name}
+            isSelected={isSelected}
             setIsSelected={() => {
-              setParticipants(
-                participants.filter((item) => item !== participant)
-              );
+              if (isSelected) {
+                setParticipants(
+                  participants.filter((p) => p !== contact.address)
+                );
+              } else {
+                setParticipants([...participants, contact.address]);
+              }
             }}
             image={
-              participantContact?.avatarUrl ||
-              "@/shared/assets/images/avatars/avatar-1.png"
+              contact.avatarUrl || "@/shared/assets/images/avatars/avatar-1.png"
             }
           />
         );
       })}
-
-      {availableContacts.map((contact, index) => (
-        <Card
-          key={index}
-          text={contact.name}
-          isSelected={false}
-          setIsSelected={() => {
-            setParticipants([...participants, contact.address]);
-          }}
-          image={
-            contact.avatarUrl || "@/shared/assets/images/avatars/avatar-1.png"
-          }
-        />
-      ))}
     </ScrollView>
   );
 };
