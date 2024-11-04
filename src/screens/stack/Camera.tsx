@@ -18,10 +18,7 @@ export const Camera = () => {
     return <View />;
   }
   const handleBarCodeScanned = (scanningResult: BarcodeScanningResult) => {
-    console.log(scanningResult.data);
-
     const address = scanningResult.data.split(":").pop()?.split("@")[0];
-
     if (address) {
       navigation.navigate("AddContact", { address });
     }

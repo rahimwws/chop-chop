@@ -23,7 +23,11 @@ const ProfileTokens = () => {
         }}
       >
         <Typography font="ar-r" size={18} align="left">
-          Your chain: BNB Smart chain
+          Your chain:{" "}
+          {Array.isArray(selectionsStore.selectedSourceChains) &&
+          selectionsStore.selectedSourceChains.length > 1
+            ? selectionsStore.selectedSourceChains.join(", ")
+            : selectionsStore.selectedSourceChains}
         </Typography>
       </View>
       <View
