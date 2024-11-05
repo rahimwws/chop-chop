@@ -26,7 +26,11 @@ export function calcOweIsOwed(bills: Bill[], userAddress: string) {
   return oweIsOwed;
 }
 
-export function calcContactOweIsOwed(bills: Bill[], userAddress: string, contactAddress: string) {
+export function calcContactOweIsOwed(
+  bills: Bill[],
+  userAddress: string,
+  contactAddress: string
+) {
   let oweIsOwed = {
     userOwe: 0,
     userIsOwed: 0,
@@ -72,7 +76,7 @@ export function calcContractOwe(
 }
 
 export const useGroupsStore = create<
-UserGroupsStore,
+  UserGroupsStore,
   [["zustand/persist", never]]
 >(
   persist(
@@ -81,6 +85,25 @@ UserGroupsStore,
       setGroups(groups: Group[]) {
         set({
           groups,
+        });
+      },
+      updateBillImage: (groupId: string, billId: string, image: string) => {
+        set((state) => {
+          const groups = state.groups.map((group) => {
+            if (group.id === groupId) {
+              return {
+                ...group,
+                bills: group.bills.map((bill) => {
+                  if (bill.id === billId) {
+                    return { ...bill, image };
+                  }
+                  return bill;
+                }),
+              };
+            }
+            return group;
+          });
+          return { groups };
         });
       },
     }),

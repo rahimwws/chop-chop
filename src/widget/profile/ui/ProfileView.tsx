@@ -8,7 +8,6 @@ import { useUserStore } from "@/shared/lib/store/userStore";
 import * as Clipboard from "expo-clipboard";
 import Edit from "@/shared//assets/svg/icons/edit.svg";
 import Copy from "@/shared//assets/svg/icons/copy.svg";
-import { NotificationSwitch } from "@/features/notification";
 
 const ProfileView = ({
   openSheet,

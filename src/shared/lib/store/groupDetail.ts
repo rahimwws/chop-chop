@@ -12,7 +12,7 @@ export const useGroupDetailStore = create<
   [["zustand/persist", never]]
 >(
   persist(
-    (set, get) => ({
+    (set) => ({
       groupDetails: null,
       setGroupDetails(group: Group) {
         set({

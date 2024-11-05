@@ -1,5 +1,7 @@
 import { Bill, Group } from "@/entities/groups/lib/types";
 import { useCallback } from "react";
+import uuid from "react-native-uuid";
+
 export const useAddNewBill = (
   groups: Group[],
   setGroups: (groups: Group[]) => void
@@ -14,7 +16,10 @@ export const useAddNewBill = (
       date: number,
       currency: string
     ) => {
+      const id = String(uuid.v4());
+
       const newBill: Bill = {
+        id,
         sum: sumGroup,
         payerAddress: paidBy,
         spenersAddresses: Object.keys(participantsPrices),

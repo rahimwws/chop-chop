@@ -1,22 +1,19 @@
 import { View, Text, Alert } from "react-native";
-import React from "react";
 import { colors } from "@/shared/lib/theme";
 import { Group } from "@/entities/groups/lib/types";
 import Typography from "@/shared/ui/Typography";
 import LargeButton from "@/shared/ui/Button/LargeButton";
 import { useAccount } from "wagmi";
-import {
-  billToDebts,
-  calcOweIsOwed,
-  useGroupsStore,
-} from "@/entities/groups/lib/store";
+import { calcOweIsOwed, useGroupsStore } from "@/entities/groups/lib/store";
 import Trash from "@/shared/assets/svg/icons/trash.svg";
 import { useAppNavigation } from "@/shared/lib/navigation";
 const GroupHeader = ({ group }: { group: Group }) => {
   const navigation = useAppNavigation();
   const account = useAccount();
+
   const groups = useGroupsStore((store) => store.groups);
   const setGroups = useGroupsStore((store) => store.setGroups);
+
   const allBills = group!.bills;
   const oweOwed = calcOweIsOwed(allBills, account.address as any);
   const handleDelete = () => {

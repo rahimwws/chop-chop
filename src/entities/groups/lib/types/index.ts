@@ -1,4 +1,5 @@
 export interface Bill {
+  id: string;
   sum: number;
   payerAddress: string;
   spenersAddresses: string[];
@@ -6,6 +7,7 @@ export interface Bill {
   name: string;
   date: number;
   currency: string;
+  image?: string | undefined;
 }
 
 export interface Group {
