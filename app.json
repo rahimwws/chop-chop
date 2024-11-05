@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Chop Chop",
-    "slug": "Chop Chop",
+    "slug": "chop-chop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -20,7 +20,11 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#2F28D0"
       },
-      "package": "com.rahimwws77.chopchop"
+      "package": "com.rahimwws77.chopchop",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "plugins": [
       [
@@ -29,6 +33,12 @@
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "dc30a6fe-93c7-4e87-95e5-d3743350007d"
+      }
+    },
+    "owner": "rahimwws77"
   }
 }
